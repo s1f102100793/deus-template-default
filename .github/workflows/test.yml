@@ -6,6 +6,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - run: |
@@ -44,3 +46,18 @@ jobs:
           cp client/.env.example client/.env
           cp server/prisma/.env.example server/prisma/.env
       - run: npm test
+      - if: github.ref == 'refs/heads/main'
+        run: |
+          sed -i '/\.env$/d;/\$\*\.ts$/d;/\*\.css\.d\.ts$/d' .gitignore
+          echo "package-lock.json" >> .gitignore
+          echo "client/public/" >> .gitignore
+          echo "docker/dev/firebase/seeder/" >> .gitignore
+          git rm -r --cached .
+          rm -rf .github
+          unlink README.md
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          git add .
+          git commit -m "copy: $SHORT_SHA"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:copy-with-types -f
