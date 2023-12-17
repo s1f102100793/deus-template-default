@@ -1,21 +1,18 @@
-name: Test
+name: Lint fix
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [deus/lint]
 
 jobs:
-  test:
-    name: Test
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          cp docker/dev/.env.example docker/dev/.env
-          cp server/.env.example server/.env
-          docker compose up -d
       - name: setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -42,9 +39,18 @@ jobs:
       - run: npm install --prefix server
         if: steps.server-npm-cache.outputs.cache-hit != 'true'
       - run: npm run generate
-      - run: npm run lint
-      - run: npm run typecheck
+      - run: npm run lint:fix
       - run: |
-          cp client/.env.example client/.env
-          cp server/prisma/.env.example server/prisma/.env
-      - run: npm test
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit --amend --no-edit
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:deus/test
+      - run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+      - uses: repo-sync/pull-request@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: 'main'
+          source_branch: 'deus/test'
+          pr_title: ${{ env.COMMIT_MESSAGE }}
+          pr_body: 'Created by Deus Creatio.'
