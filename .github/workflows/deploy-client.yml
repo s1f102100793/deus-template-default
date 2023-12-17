@@ -1,17 +1,13 @@
 name: Deploy client
 
 on:
-  workflow_run:
-    workflows: ['Test']
+  push:
     branches: [main]
-    types:
-      - completed
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: write
     steps:
