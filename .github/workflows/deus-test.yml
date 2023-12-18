@@ -1,14 +1,20 @@
 name: Test
 
-on: pull_request
+on:
+  push:
+    branches: [deus/test]
 
 jobs:
   test:
-    name: Test
+    name: Deus Test
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - run: |
           cp docker/dev/.env.example docker/dev/.env
           cp server/.env.example server/.env
@@ -38,10 +44,22 @@ jobs:
         if: steps.client-npm-cache.outputs.cache-hit != 'true'
       - run: npm install --prefix server
         if: steps.server-npm-cache.outputs.cache-hit != 'true'
+      - run: npm run migrate:dev:createonly --prefix server -- --name deus
       - run: npm run generate
-      - run: npm run lint
+      - run: npm run lint:fix
       - run: npm run typecheck
       - run: |
           cp client/.env.example client/.env
           cp server/prisma/.env.example server/prisma/.env
       - run: npm test
+      - run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add .
+            git commit -m "Formatted"
+            git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD
+          fi
+          git push https://${{ secrets.PAT }}@github.com/${{ github.repository }} HEAD:main
