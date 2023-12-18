@@ -44,13 +44,12 @@ jobs:
         if: steps.client-npm-cache.outputs.cache-hit != 'true'
       - run: npm install --prefix server
         if: steps.server-npm-cache.outputs.cache-hit != 'true'
+      - run: cp server/prisma/.env.example server/prisma/.env
       - run: npm run migrate:dev:createonly --prefix server -- --name deus
       - run: npm run generate
       - run: npm run lint:fix
       - run: npm run typecheck
-      - run: |
-          cp client/.env.example client/.env
-          cp server/prisma/.env.example server/prisma/.env
+      - run: cp client/.env.example client/.env
       - run: npm test
       - run: |
           if git diff --quiet; then
