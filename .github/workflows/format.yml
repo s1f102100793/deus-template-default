@@ -1,12 +1,11 @@
-name: Lint fix
+name: Format
 
 on:
   push:
-    branches: [deus/lint]
+    branches: [deus/format]
 
 jobs:
-  lint:
-    name: Lint
+  format:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -47,7 +46,7 @@ jobs:
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add .
           git commit --amend --no-edit
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:deus/test
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:deus/test -f
       - run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
       - uses: repo-sync/pull-request@v2
         with:

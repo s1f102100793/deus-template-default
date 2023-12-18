@@ -1,6 +1,6 @@
 name: Test
 
-on: 'pull_request'
+on: pull_request
 
 jobs:
   test:
@@ -46,3 +46,13 @@ jobs:
           cp client/.env.example client/.env
           cp server/prisma/.env.example server/prisma/.env
       - run: npm test
+      - uses: actions/github-script@v7
+        if: ${{ github.head_ref == 'deus/test' }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            })
