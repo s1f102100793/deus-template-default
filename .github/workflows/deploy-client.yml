@@ -51,8 +51,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./client/out
-      - run: git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:deus/test -f
-        if: github.repository == 'deus-app/deus-template'
       - run: |
           sed -i '/\.env$/d;/\$\*\.ts$/d;/\*\.css\.d\.ts$/d' .gitignore
           echo "package-lock.json" >> .gitignore
