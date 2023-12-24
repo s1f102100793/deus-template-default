@@ -59,4 +59,4 @@ jobs:
           SHORT_SHA=$(git rev-parse --short HEAD)
           git add .
           git commit -m "copy: $SHORT_SHA"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:copy-with-types -f
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:copy-main-types -f
