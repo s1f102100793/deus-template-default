@@ -1,5 +1,7 @@
 .container {
-  height: 60px;
+  position: sticky;
+  top: 0;
+  height: 48px;
   background: #fafafa;
   border-bottom: 1px solid #eee;
 }
@@ -12,6 +14,12 @@
   height: 100%;
   padding: 0 16px;
   margin: 0 auto;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0d0e59;
 }
 
 .userBtn {
@@ -56,4 +64,10 @@
 
 .loginBtn:hover {
   background: #0d0e59cc;
+}
+
+@media screen and (max-width: 640px) {
+  .userName {
+    display: none;
+  }
 }

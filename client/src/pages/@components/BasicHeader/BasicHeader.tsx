@@ -1,8 +1,8 @@
+import { APP_TITLE } from 'commonConstantsWithClient';
 import type { UserModel } from 'commonTypesWithClient/models';
 import { GithubIcon } from 'src/components/icons/GithubIcon';
 import { HumanIcon } from 'src/components/icons/HumanIcon';
 import { useLoading } from 'src/pages/@hooks/useLoading';
-import { staticPath } from 'src/utils/$path';
 import { loginWithGitHub, logout } from 'src/utils/login';
 import styles from './BasicHeader.module.css';
 
@@ -20,7 +20,7 @@ export const BasicHeader = (props: { user: UserModel | null }) => {
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        <img src={staticPath.frourio_svg} height={36} alt="frourio logo" />
+        <div className={styles.title}>{APP_TITLE}</div>
         {props.user === null ? (
           <div onClick={login}>
             <div className={styles.loginBtn}>

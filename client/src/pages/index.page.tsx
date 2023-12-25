@@ -1,4 +1,3 @@
-import { APP_TITLE } from 'commonConstantsWithClient';
 import type { TaskModel } from 'commonTypesWithClient/models';
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
@@ -51,43 +50,42 @@ const Home = () => {
   return (
     <>
       <BasicHeader user={user} />
-      <div className={styles.title} style={{ margin: '160px 0 80px' }}>
-        {APP_TITLE}
-      </div>
-      {user === null ? (
-        <ul className={styles.tasks}>
-          {tasks.map((task) => (
-            <li key={task.id}>
-              <label>
-                <span>{task.label}</span>
-              </label>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <>
-          <form style={{ textAlign: 'center' }} onSubmit={createTask}>
-            <input value={label} type="text" onChange={inputLabel} />
-            <input type="submit" value="ADD" />
-          </form>
+      <div className={styles.container}>
+        {user === null ? (
           <ul className={styles.tasks}>
             {tasks.map((task) => (
               <li key={task.id}>
                 <label>
-                  <input type="checkbox" checked={task.done} onChange={() => toggleDone(task)} />
                   <span>{task.label}</span>
                 </label>
-                <input
-                  type="button"
-                  value="DELETE"
-                  className={styles.deleteBtn}
-                  onClick={() => deleteTask(task)}
-                />
               </li>
             ))}
           </ul>
-        </>
-      )}
+        ) : (
+          <>
+            <form style={{ textAlign: 'center' }} onSubmit={createTask}>
+              <input value={label} type="text" onChange={inputLabel} />
+              <input type="submit" value="ADD" />
+            </form>
+            <ul className={styles.tasks}>
+              {tasks.map((task) => (
+                <li key={task.id}>
+                  <label>
+                    <input type="checkbox" checked={task.done} onChange={() => toggleDone(task)} />
+                    <span>{task.label}</span>
+                  </label>
+                  <input
+                    type="button"
+                    value="DELETE"
+                    className={styles.deleteBtn}
+                    onClick={() => deleteTask(task)}
+                  />
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
     </>
   );
 };
