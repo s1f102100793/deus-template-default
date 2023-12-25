@@ -39,3 +39,21 @@
   font-weight: bold;
   color: #555;
 }
+
+.loginBtn {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  background: #0d0e59;
+  border-radius: 4px;
+  transition: 0.2s background;
+}
+
+.loginBtn:hover {
+  background: #0d0e59cc;
+}

@@ -1,7 +1,6 @@
 import {
   createTask,
   deleteTaskByBrandedId,
-  getTasks,
   updateTaskByBrandedId,
 } from '$/repository/tasksRepository';
 import { taskIdParser } from '$/service/idParsers';
@@ -9,10 +8,6 @@ import { z } from 'zod';
 import { defineController } from './$relay';
 
 export default defineController(() => ({
-  get: async ({ user, query }) => ({
-    status: 200,
-    body: await getTasks(user.id, query?.limit),
-  }),
   post: {
     validators: { body: z.object({ label: z.string() }) },
     handler: async ({ user, body }) => ({

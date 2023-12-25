@@ -1,10 +1,18 @@
 import type { UserModel } from 'commonTypesWithClient/models';
+import { GithubIcon } from 'src/components/icons/GithubIcon';
 import { HumanIcon } from 'src/components/icons/HumanIcon';
+import { useLoading } from 'src/pages/@hooks/useLoading';
 import { staticPath } from 'src/utils/$path';
-import { logout } from 'src/utils/login';
+import { loginWithGitHub, logout } from 'src/utils/login';
 import styles from './BasicHeader.module.css';
 
-export const BasicHeader = ({ user }: { user: UserModel }) => {
+export const BasicHeader = (props: { user: UserModel | null }) => {
+  const { loadingElm, addLoading, removeLoading } = useLoading();
+  const login = async () => {
+    addLoading();
+    await loginWithGitHub();
+    removeLoading();
+  };
   const onLogout = async () => {
     if (confirm('Logout?')) await logout();
   };
@@ -13,21 +21,30 @@ export const BasicHeader = ({ user }: { user: UserModel }) => {
     <div className={styles.container}>
       <div className={styles.main}>
         <img src={staticPath.frourio_svg} height={36} alt="frourio logo" />
-
-        <div className={styles.userBtn} onClick={onLogout}>
-          {user.photoURL !== undefined ? (
-            <img
-              className={styles.userIcon}
-              src={user.photoURL}
-              height={24}
-              alt={user.displayName}
-            />
-          ) : (
-            <HumanIcon size={18} fill="#555" />
-          )}
-          <span className={styles.userName}>{user.displayName}</span>
-        </div>
+        {props.user === null ? (
+          <div onClick={login}>
+            <div className={styles.loginBtn}>
+              <GithubIcon size={18} fill="#fff" />
+              <span>Login with GitHub</span>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.userBtn} onClick={onLogout}>
+            {props.user.photoURL !== undefined ? (
+              <img
+                className={styles.userIcon}
+                src={props.user.photoURL}
+                height={24}
+                alt={props.user.displayName}
+              />
+            ) : (
+              <HumanIcon size={18} fill="#555" />
+            )}
+            <span className={styles.userName}>{props.user.displayName}</span>
+          </div>
+        )}
       </div>
+      {loadingElm}
     </div>
   );
 };

@@ -3,13 +3,6 @@ import type { Maybe, TaskId } from 'commonTypesWithClient/ids';
 import type { TaskModel } from 'commonTypesWithClient/models';
 
 export type Methods = DefineMethods<{
-  get: {
-    query?: {
-      limit?: number;
-    };
-    resBody: TaskModel[];
-  };
-
   post: {
     reqBody: {
       label: string;

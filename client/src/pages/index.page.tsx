@@ -1,3 +1,4 @@
+import { APP_TITLE } from 'commonConstantsWithClient';
 import type { TaskModel } from 'commonTypesWithClient/models';
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
@@ -17,7 +18,7 @@ const Home = () => {
     setLabel(e.target.value);
   };
   const fetchTasks = async () => {
-    const tasks = await apiClient.tasks.$get().catch(returnNull);
+    const tasks = await apiClient.public.tasks.$get().catch(returnNull);
 
     if (tasks !== null) setTasks(tasks);
   };
@@ -42,40 +43,51 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (!user) return;
-
     fetchTasks();
-  }, [user]);
+  }, []);
 
-  if (!tasks || !user) return <Loading visible />;
+  if (!tasks) return <Loading visible />;
 
   return (
     <>
       <BasicHeader user={user} />
-      <div className={styles.title} style={{ marginTop: '160px' }}>
-        Welcome to frourio!
+      <div className={styles.title} style={{ margin: '160px 0 80px' }}>
+        {APP_TITLE}
       </div>
-
-      <form style={{ textAlign: 'center', marginTop: '80px' }} onSubmit={createTask}>
-        <input value={label} type="text" onChange={inputLabel} />
-        <input type="submit" value="ADD" />
-      </form>
-      <ul className={styles.tasks}>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <label>
-              <input type="checkbox" checked={task.done} onChange={() => toggleDone(task)} />
-              <span>{task.label}</span>
-            </label>
-            <input
-              type="button"
-              value="DELETE"
-              className={styles.deleteBtn}
-              onClick={() => deleteTask(task)}
-            />
-          </li>
-        ))}
-      </ul>
+      {user === null ? (
+        <ul className={styles.tasks}>
+          {tasks.map((task) => (
+            <li key={task.id}>
+              <label>
+                <span>{task.label}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <>
+          <form style={{ textAlign: 'center' }} onSubmit={createTask}>
+            <input value={label} type="text" onChange={inputLabel} />
+            <input type="submit" value="ADD" />
+          </form>
+          <ul className={styles.tasks}>
+            {tasks.map((task) => (
+              <li key={task.id}>
+                <label>
+                  <input type="checkbox" checked={task.done} onChange={() => toggleDone(task)} />
+                  <span>{task.label}</span>
+                </label>
+                <input
+                  type="button"
+                  value="DELETE"
+                  className={styles.deleteBtn}
+                  onClick={() => deleteTask(task)}
+                />
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </>
   );
 };
