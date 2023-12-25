@@ -1,20 +1,27 @@
 import type { Maybe, TaskId, UserId } from '$/commonTypesWithClient/ids';
-import type { Prisma, Task } from '@prisma/client';
+import type { Prisma, Task, User } from '@prisma/client';
 import type { TaskModel } from 'commonTypesWithClient/models';
 import { randomUUID } from 'crypto';
-import { taskIdParser } from '../service/idParsers';
+import { taskIdParser, userIdParser } from '../service/idParsers';
 import { prismaClient } from '../service/prismaClient';
 
-const toModel = (prismaTask: Task): TaskModel => ({
-  id: taskIdParser.parse(prismaTask.id),
-  label: prismaTask.label,
-  done: prismaTask.done,
-  created: prismaTask.createdAt.getTime(),
+const toModel = (task: Task & { User: User }): TaskModel => ({
+  id: taskIdParser.parse(task.id),
+  label: task.label,
+  done: task.done,
+  createdTime: task.createdAt.getTime(),
+  author: {
+    userId: userIdParser.parse(task.userId),
+    githubId: task.User.githubId,
+    name: task.User.displayName ?? task.User.githubId,
+    photoURL: task.User.photoURL ?? undefined,
+  },
 });
 
 export const getTasks = async (limit?: number): Promise<TaskModel[]> => {
   const prismaTasks = await prismaClient.task.findMany({
     take: limit,
+    include: { User: true },
     orderBy: { createdAt: 'desc' },
   });
 
@@ -30,6 +37,7 @@ export const createTask = async (userId: UserId, label: TaskModel['label']): Pro
       label,
       createdAt: new Date(),
     },
+    include: { User: true },
   });
 
   return toModel(prismaTask);
@@ -43,6 +51,7 @@ export const updateTaskByStringId = async (params: {
   const prismaTask = await prismaClient.task.update({
     where: { id: params.taskId, userId: params.userId },
     data: params.partialTask,
+    include: { User: true },
   });
 
   return toModel(prismaTask);
@@ -51,6 +60,7 @@ export const updateTaskByStringId = async (params: {
 export const deleteTaskByStringId = async (userId: UserId, taskId: string): Promise<TaskModel> => {
   const prismaTask = await prismaClient.task.delete({
     where: { id: taskId, userId },
+    include: { User: true },
   });
 
   return toModel(prismaTask);
@@ -64,6 +74,7 @@ export const updateTaskByBrandedId = async (params: {
   const prismaTask = await prismaClient.task.update({
     where: { id: params.taskId, userId: params.userId },
     data: params.partialTask,
+    include: { User: true },
   });
 
   return toModel(prismaTask);
@@ -75,11 +86,8 @@ export const deleteTaskByBrandedId = async (
 ): Promise<TaskModel> => {
   const prismaTask = await prismaClient.task.delete({
     where: { id: taskId, userId },
+    include: { User: true },
   });
 
   return toModel(prismaTask);
-};
-
-export const findManyTask = async (userId: UserId) => {
-  return await prismaClient.task.findMany({ where: { userId }, orderBy: { createdAt: 'desc' } });
 };

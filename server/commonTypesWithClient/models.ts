@@ -1,19 +1,23 @@
-import { z } from 'zod';
-import { taskIdParser } from '../service/idParsers';
-import type { UserId } from './ids';
+import type { GitHubId, TaskId, UserId } from './ids';
 
 export type UserModel = {
   id: UserId;
+  githubId: GitHubId;
   email: string;
   displayName: string | undefined;
   photoURL: string | undefined;
+  createdTime: number;
 };
 
-export const taskParser = z.object({
-  id: taskIdParser,
-  label: z.string(),
-  done: z.boolean(),
-  created: z.number(),
-});
-
-export type TaskModel = z.infer<typeof taskParser>;
+export type TaskModel = {
+  id: TaskId;
+  label: string;
+  done: boolean;
+  createdTime: number;
+  author: {
+    userId: UserId;
+    githubId: string;
+    name: string;
+    photoURL: string | undefined;
+  };
+};

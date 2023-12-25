@@ -26,19 +26,19 @@ const Home = () => {
     e.preventDefault();
     if (!label) return;
 
-    await apiClient.tasks.post({ body: { label } }).catch(returnNull);
+    await apiClient.private.tasks.post({ body: { label } }).catch(returnNull);
     setLabel('');
     await fetchTasks();
   };
   const toggleDone = async (task: TaskModel) => {
-    await apiClient.tasks
+    await apiClient.private.tasks
       ._taskId(task.id)
       .patch({ body: { done: !task.done } })
       .catch(returnNull);
     await fetchTasks();
   };
   const deleteTask = async (task: TaskModel) => {
-    await apiClient.tasks._taskId(task.id).delete().catch(returnNull);
+    await apiClient.private.tasks._taskId(task.id).delete().catch(returnNull);
     await fetchTasks();
   };
 

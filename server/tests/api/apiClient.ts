@@ -1,5 +1,5 @@
-import { firebaseAdmin } from '$/middleware/firebaseAdmin';
 import { API_BASE_PATH, FIREBASE_AUTH_EMULATOR_HOST, PORT } from '$/service/envValues';
+import { firebaseAdmin } from '$/service/firebaseAdmin';
 import aspida from '@aspida/axios';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';

@@ -1,6 +1,6 @@
 import type { UserModel } from '$/commonTypesWithClient/models';
-import { getUserRecord } from '$/middleware/firebaseAdmin';
-import { usersRepo } from '$/repository/usersRepo';
+import { getUserRecord } from '$/service/firebaseAdmin';
+import { userUseCase } from '../../useCase/userUseCase';
 import { defineHooks } from './$relay';
 
 export type AdditionalRequest = {
@@ -11,11 +11,11 @@ export default defineHooks(() => ({
   preHandler: async (req, res) => {
     const user = await getUserRecord(req.cookies.session);
 
-    if (!user) {
+    if (user === null) {
       res.status(401).send();
       return;
     }
 
-    req.user = usersRepo.recordToModel(user);
+    req.user = await userUseCase.findOrCreateUser(user);
   },
 }));

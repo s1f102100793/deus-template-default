@@ -1,4 +1,4 @@
-import { firebaseAdmin } from '$/middleware/firebaseAdmin';
+import { firebaseAdmin } from '$/service/firebaseAdmin';
 import type { CookieSerializeOptions } from '@fastify/cookie';
 import { defineController } from './$relay';
 
