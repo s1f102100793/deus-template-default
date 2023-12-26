@@ -4,8 +4,10 @@ import type { TaskModel } from 'commonTypesWithClient/models';
 
 export type Methods = DefineMethods<{
   post: {
+    reqFormat: FormData;
     reqBody: {
       label: string;
+      image?: Blob;
     };
     resBody: TaskModel;
   };
@@ -13,8 +15,7 @@ export type Methods = DefineMethods<{
   patch: {
     reqBody: {
       taskId: Maybe<TaskId>;
-      label?: string;
-      done?: boolean;
+      done: boolean;
     };
     status: 204;
     resBody: TaskModel;
@@ -25,6 +26,5 @@ export type Methods = DefineMethods<{
       taskId: Maybe<TaskId>;
     };
     status: 204;
-    resBody: TaskModel;
   };
 }>;

@@ -1,40 +1,45 @@
-import {
-  createTask,
-  deleteTaskByBrandedId,
-  updateTaskByBrandedId,
-} from '$/repository/tasksRepository';
 import { taskIdParser } from '$/service/idParsers';
+import { taskUseCase } from '$/useCase/taskUseCase';
+import type { MultipartFile } from '@fastify/multipart';
+import { Readable } from 'stream';
 import { z } from 'zod';
 import { defineController } from './$relay';
 
+const multipartFileValidator = (): z.ZodType<MultipartFile> =>
+  z
+    .object({
+      type: z.literal('file'),
+      toBuffer: z.function().returns(z.any()),
+      file: z.instanceof(Readable).and(z.object({ truncated: z.boolean(), bytesRead: z.number() })),
+      fieldname: z.string(),
+      filename: z.string(),
+      encoding: z.string(),
+      mimetype: z.string(),
+      fields: z.record(z.any()),
+    })
+    .passthrough();
+
 export default defineController(() => ({
   post: {
-    validators: { body: z.object({ label: z.string() }) },
+    validators: {
+      body: z.object({ label: z.string(), image: multipartFileValidator().optional() }),
+    },
     handler: async ({ user, body }) => ({
       status: 201,
-      body: await createTask(user.id, body.label),
+      body: await taskUseCase.create(user, body.label, body.image),
     }),
   },
   patch: {
-    validators: {
-      body: z.object({
-        taskId: taskIdParser,
-        label: z.string().optional(),
-        done: z.boolean().optional(),
-      }),
-    },
+    validators: { body: z.object({ taskId: taskIdParser, done: z.boolean() }) },
     handler: async ({ user, body }) => {
-      const task = await updateTaskByBrandedId({
-        userId: user.id,
-        taskId: body.taskId,
-        partialTask: body,
-      });
+      const task = await taskUseCase.updateDone(user, body.taskId, body.done);
 
       return { status: 204, body: task };
     },
   },
   delete: async ({ user, body }) => {
-    const task = await deleteTaskByBrandedId(user.id, body.taskId);
-    return { status: 204, body: task };
+    await taskUseCase.delete(user, body.taskId);
+
+    return { status: 204 };
   },
 }));

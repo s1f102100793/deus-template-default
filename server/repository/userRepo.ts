@@ -11,7 +11,7 @@ const toModel = (prismaUser: User): UserModel => ({
   createdTime: prismaUser.createdAt.getTime(),
 });
 
-export const usersRepo = {
+export const userRepo = {
   save: async (tx: Prisma.TransactionClient, user: UserModel) => {
     return tx.user.upsert({
       where: { id: user.id },

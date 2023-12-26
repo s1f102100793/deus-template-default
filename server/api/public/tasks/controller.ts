@@ -1,9 +1,10 @@
-import { getTasks } from '$/repository/tasksRepository';
+import { taskRepo } from '$/repository/taskRepo';
+import { prismaClient } from '$/service/prismaClient';
 import { defineController } from './$relay';
 
 export default defineController(() => ({
   get: async ({ query }) => ({
     status: 200,
-    body: await getTasks(query?.limit),
+    body: await taskRepo.findAll(prismaClient, query?.limit),
   }),
 }));

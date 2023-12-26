@@ -14,6 +14,7 @@ export type TaskModel = {
   label: string;
   done: boolean;
   createdTime: number;
+  image: { url: string; s3Key: string } | undefined;
   author: {
     userId: UserId;
     githubId: string;
