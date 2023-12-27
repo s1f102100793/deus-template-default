@@ -1,23 +1,7 @@
 import { taskIdParser } from '$/service/idParsers';
 import { taskUseCase } from '$/useCase/taskUseCase';
-import type { MultipartFile } from '@fastify/multipart';
-import { Readable } from 'stream';
 import { z } from 'zod';
-import { defineController } from './$relay';
-
-const multipartFileValidator = (): z.ZodType<MultipartFile> =>
-  z
-    .object({
-      type: z.literal('file'),
-      toBuffer: z.function().returns(z.any()),
-      file: z.instanceof(Readable).and(z.object({ truncated: z.boolean(), bytesRead: z.number() })),
-      fieldname: z.string(),
-      filename: z.string(),
-      encoding: z.string(),
-      mimetype: z.string(),
-      fields: z.record(z.any()),
-    })
-    .passthrough();
+import { defineController, multipartFileValidator } from './$relay';
 
 export default defineController(() => ({
   post: {
