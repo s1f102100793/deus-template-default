@@ -13,10 +13,7 @@ node_modules/
 .DS_Store
 *.pem
 tsconfig.tsbuildinfo
-*.css.d.ts
 *.css.d.ts.map
-$*.ts
-.env
 
 # debug
 npm-debug.log*
@@ -37,3 +34,5 @@ npm-debug.log*
 server/index.js
 server/index.js.map
 server/upload/
+package-lock.json
+docker/dev/firebase/seeder/
