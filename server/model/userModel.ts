@@ -1,16 +1,15 @@
+import type { UserId } from '$/commonTypesWithClient/ids';
 import type { UserModel } from '$/commonTypesWithClient/models';
-import { githubIdParser, userIdParser } from '$/service/idParsers';
-import type { UserRecord } from 'firebase-admin/lib/auth/user-record';
+
+export type JwtUser = { sub: UserId; email: string; role: 'authenticated' | 'anon' };
 
 export const userModel = {
-  create: (userRecord: UserRecord): UserModel => ({
-    id: userIdParser.parse(userRecord.uid),
-    githubId: githubIdParser.parse(
-      userRecord.providerData.find(({ providerId }) => providerId === 'github.com')?.uid
-    ),
-    email: userRecord.email ?? '',
-    displayName: userRecord.displayName,
-    photoURL: userRecord.photoURL,
-    createdTime: Date.now(),
-  }),
+  create: (jwtUser: JwtUser): UserModel => {
+    return {
+      id: jwtUser.sub,
+      email: jwtUser.email,
+      name: jwtUser.sub.split('-')[0],
+      createdTime: Date.now(),
+    };
+  },
 };

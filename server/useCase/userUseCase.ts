@@ -1,16 +1,16 @@
 import type { UserModel } from '$/commonTypesWithClient/models';
+import type { JwtUser } from '$/model/userModel';
 import { userModel } from '$/model/userModel';
 import { userRepo } from '$/repository/userRepo';
 import { transaction } from '$/service/prismaClient';
-import type { UserRecord } from 'firebase-admin/lib/auth/user-record';
 
 export const userUseCase = {
-  findOrCreate: (userRecord: UserRecord) =>
+  findOrCreate: (jwtUser: JwtUser) =>
     transaction<UserModel>('RepeatableRead', async (tx) => {
-      const user = await userRepo.findById(tx, userRecord.uid);
+      const user = await userRepo.findById(tx, jwtUser.sub);
       if (user !== null) return user;
 
-      const newUser = userModel.create(userRecord);
+      const newUser = userModel.create(jwtUser);
       await userRepo.save(tx, newUser);
 
       return newUser;

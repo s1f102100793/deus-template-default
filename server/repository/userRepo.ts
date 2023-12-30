@@ -1,13 +1,12 @@
+import type { UserId } from '$/commonTypesWithClient/ids';
 import type { UserModel } from '$/commonTypesWithClient/models';
-import { githubIdParser, userIdParser } from '$/service/idParsers';
+import { userIdParser } from '$/service/idParsers';
 import type { Prisma, User } from '@prisma/client';
 
 const toModel = (prismaUser: User): UserModel => ({
   id: userIdParser.parse(prismaUser.id),
-  githubId: githubIdParser.parse(prismaUser.githubId),
   email: prismaUser.email,
-  displayName: prismaUser.displayName ?? undefined,
-  photoURL: prismaUser.photoURL ?? undefined,
+  name: prismaUser.name,
   createdTime: prismaUser.createdAt.getTime(),
 });
 
@@ -15,17 +14,15 @@ export const userRepo = {
   save: async (tx: Prisma.TransactionClient, user: UserModel) => {
     return tx.user.upsert({
       where: { id: user.id },
-      update: { email: user.email, displayName: user.displayName, photoURL: user.photoURL },
+      update: { email: user.email, name: user.name },
       create: {
         id: user.id,
-        githubId: user.githubId,
         email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
+        name: user.name,
         createdAt: new Date(user.createdTime),
       },
     });
   },
-  findById: (tx: Prisma.TransactionClient, id: string): Promise<UserModel | null> =>
+  findById: (tx: Prisma.TransactionClient, id: UserId): Promise<UserModel | null> =>
     tx.user.findUnique({ where: { id } }).then((user) => (user !== null ? toModel(user) : null)),
 };

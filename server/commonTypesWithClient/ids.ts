@@ -5,6 +5,5 @@ type Branded<T extends string> = string & z.BRAND<T>;
 export type Maybe<T> = T | Branded<'Maybe'>;
 
 export type UserId = Branded<'UserId'>;
-export type GitHubId = Branded<'GitHubId'>;
 export type TaskId = Branded<'TaskId'>;
 export type DeletableTaskId = Branded<'DeletableTaskId'>;

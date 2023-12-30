@@ -13,12 +13,7 @@ const toModel = (task: Task & { User: User }): TaskModel => ({
     task.imageKey === null
       ? undefined
       : { url: `${S3_PREFIX}${task.imageKey}`, s3Key: task.imageKey },
-  author: {
-    userId: userIdParser.parse(task.userId),
-    githubId: task.User.githubId,
-    name: task.User.displayName ?? task.User.githubId,
-    photoURL: task.User.photoURL ?? undefined,
-  },
+  author: { userId: userIdParser.parse(task.userId), name: task.User.name },
 });
 
 export const taskRepo = {

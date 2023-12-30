@@ -1,9 +1,10 @@
-import { firebaseAdmin } from '$/service/firebaseAdmin';
+import { COOKIE_NAME } from '$/service/constants';
 import type { CookieSerializeOptions } from '@fastify/cookie';
+import type { Methods } from '.';
 import { defineController } from './$relay';
 
 export type AdditionalRequest = {
-  body: { idToken: string };
+  body: Methods['post']['reqBody'];
 };
 
 const options: CookieSerializeOptions = {
@@ -16,16 +17,15 @@ const options: CookieSerializeOptions = {
 export default defineController(() => ({
   post: {
     hooks: {
-      preHandler: async (req, reply) => {
-        const auth = firebaseAdmin.auth();
+      preHandler: (req, reply, done) => {
         const expiresIn = 60 * 60 * 24 * 5 * 1000;
-        const idToken = req.body?.idToken ?? '';
-        const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
 
-        reply.setCookie('session', sessionCookie, {
+        reply.setCookie(COOKIE_NAME, req.body?.jwt ?? '', {
           ...options,
           expires: new Date(Date.now() + expiresIn),
         });
+
+        done();
       },
     },
     handler: () => {
@@ -34,14 +34,9 @@ export default defineController(() => ({
   },
   delete: {
     hooks: {
-      preHandler: async (req, reply) => {
-        const auth = firebaseAdmin.auth();
-        const sessionId = req.cookies.session ?? '';
-        const decodedClaims = await auth.verifySessionCookie(sessionId).catch(() => null);
-
-        if (decodedClaims) await auth.revokeRefreshTokens(decodedClaims.sub);
-
-        reply.clearCookie('session', options);
+      preHandler: (_, reply, done) => {
+        reply.clearCookie(COOKIE_NAME, options);
+        done();
       },
     },
     handler: () => {

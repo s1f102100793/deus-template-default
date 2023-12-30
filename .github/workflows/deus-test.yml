@@ -98,7 +98,6 @@ jobs:
       - run: |
           sed -i '/\.env$/d;/\$\*\.ts$/d;/\*\.css\.d\.ts$/d' .gitignore
           echo "package-lock.json" >> .gitignore
-          echo "docker/dev/firebase/seeder/" >> .gitignore
           git rm -r --cached .
           rm -rf .github
           unlink README.md

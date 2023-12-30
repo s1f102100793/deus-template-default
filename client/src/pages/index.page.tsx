@@ -49,7 +49,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [user?.id]);
 
   if (!tasks) return <Loading visible />;
 

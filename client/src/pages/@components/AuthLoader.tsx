@@ -1,34 +1,28 @@
-import { onAuthStateChanged } from 'firebase/auth';
 import { useAtom } from 'jotai';
-import { useEffect, useReducer } from 'react';
+import { useEffect } from 'react';
 import { userAtom } from 'src/atoms/user';
 import { apiClient } from 'src/utils/apiClient';
-import { createAuth } from 'src/utils/firebase';
 import { returnNull } from 'src/utils/returnNull';
-import { Loading } from '../../components/Loading/Loading';
+import { supabase } from 'src/utils/supabase';
 
 export const AuthLoader = () => {
-  const [, setUser] = useAtom(userAtom);
-  const [isInitedAuth, dispatchIsInitedAuth] = useReducer(() => true, false);
+  const [user, setUser] = useAtom(userAtom);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(createAuth(), async (fbUser) => {
-      if (fbUser) {
-        await fbUser
-          .getIdToken()
-          .then((idToken) => apiClient.session.$post({ body: { idToken } }))
-          .catch(returnNull);
-        await apiClient.me.$get().catch(returnNull).then(setUser);
-      } else {
-        await apiClient.session.$delete();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_, session) => {
+      if (session === null && user?.id !== null) {
+        await apiClient.session.$delete().catch(returnNull);
         setUser(null);
+      } else if (session !== null && user?.id !== session.user.id) {
+        await apiClient.session.$post({ body: { jwt: session?.access_token } }).catch(returnNull);
+        await apiClient.private.me.$post().catch(returnNull).then(setUser);
       }
-
-      dispatchIsInitedAuth();
     });
 
-    return unsubscribe;
-  }, [setUser]);
+    return subscription.unsubscribe;
+  }, [user?.id, setUser]);
 
-  return <Loading visible={!isInitedAuth} />;
+  return <></>;
 };

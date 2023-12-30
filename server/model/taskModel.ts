@@ -18,12 +18,7 @@ export const taskModel = {
     label,
     image: data === undefined ? undefined : dataToUrl(data),
     createdTime: Date.now(),
-    author: {
-      userId: user.id,
-      githubId: user.githubId,
-      name: user.displayName ?? user.githubId,
-      photoURL: user.photoURL ?? undefined,
-    },
+    author: { userId: user.id, name: user.name },
   }),
   deleteOrThrow: (user: UserModel, task: TaskModel): DeletableTaskId => {
     if (user.id !== task.author.userId) throw new Error('cannot delete');

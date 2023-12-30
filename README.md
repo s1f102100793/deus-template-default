@@ -34,6 +34,13 @@ $ cp docker/dev/.env.example docker/dev/.env
 
 ```sh
 $ docker compose up -d
+$ cd ..
+$ git clone --depth 1 https://github.com/supabase/supabase
+$ cd supabase/docker
+$ cp .env.example .env
+$ sed -i 's#"/auth/v1/verify"#"http://localhost:8000/auth/v1/verify"#g' .env
+$ docker compose -f docker-compose.yml -f dev/docker-compose.dev.yml up -d
+$ cd ../../deus-template
 ```
 
 ### 開発サーバー起動
@@ -51,10 +58,6 @@ Web ブラウザで http://localhost:3000 を開く
 [Node.js モノレポ開発のターミナルログ混雑解消のための新作 CLI ツール notios](https://zenn.dev/luma/articles/nodejs-new-cli-tool-notios)
 
 閉じるときは `Ctrl + C` を 2 回連続で入力
-
-#### Firebase Emulator
-
-http://localhost:4000/auth
 
 #### MinIO Console
 
