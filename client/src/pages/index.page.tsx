@@ -3,12 +3,11 @@ import type { TaskModel } from 'commonTypesWithClient/models';
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import { ElapsedTime } from 'src/components/ElapsedTime';
 import { Loading } from 'src/components/Loading/Loading';
-import { HumanIcon } from 'src/components/icons/HumanIcon';
 import { BasicHeader } from 'src/pages/@components/BasicHeader/BasicHeader';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
-import { timeSince } from 'src/utils/time';
 import { userAtom } from '../atoms/user';
 import styles from './index.module.css';
 
@@ -18,9 +17,9 @@ const Home = () => {
   const [tasks, setTasks] = useState<TaskModel[]>();
   const [label, setLabel] = useState('');
   const [image, setImage] = useState<File>();
-  const [editingTaskId, setEditingTaskId] = useState<TaskId | null>(null);
-  const [editingLabel, setEditingLabel] = useState<string>('');
-  const previewImageUrl = image ? URL.createObjectURL(image) : null;
+  const [editingTaskId, setEditingTaskId] = useState<TaskId>();
+  const [editingLabel, setEditingLabel] = useState('');
+  const [previewImageUrl, setPreviewImageUrl] = useState('');
 
   const inputLabel = (e: ChangeEvent<HTMLInputElement>) => {
     setLabel(e.target.value);
@@ -43,6 +42,7 @@ const Home = () => {
     await apiClient.private.tasks.post({ body: { label, image } }).catch(returnNull);
     setLabel('');
     setImage(undefined);
+    setPreviewImageUrl('');
     fileRef.current.value = '';
     await fetchTasks();
   };
@@ -60,11 +60,11 @@ const Home = () => {
     setEditingTaskId(task.id);
     setEditingLabel(task.label);
   };
-  const saveEditTask = async (task: TaskModel) => {
+  const updateTask = async (task: TaskModel) => {
     await apiClient.private.tasks
       .patch({ body: { taskId: task.id, done: task.done, label: editingLabel } })
       .catch(returnNull);
-    setEditingTaskId(null);
+    setEditingTaskId(undefined);
     setEditingLabel('');
     await fetchTasks();
   };
@@ -72,6 +72,15 @@ const Home = () => {
   useEffect(() => {
     fetchTasks();
   }, [user?.id]);
+  useEffect(() => {
+    if (image) {
+      const newUrl = URL.createObjectURL(image);
+      setPreviewImageUrl(newUrl);
+      return () => {
+        URL.revokeObjectURL(newUrl);
+      };
+    }
+  }, [image]);
 
   const renderEditField = (task: TaskModel) => {
     return editingTaskId === task.id ? (
@@ -82,7 +91,7 @@ const Home = () => {
   };
   const renderEditButtons = (task: TaskModel) => {
     return editingTaskId === task.id ? (
-      <input type="button" value="SAVE" className={styles.btn} onClick={() => saveEditTask(task)} />
+      <input type="button" value="SAVE" className={styles.btn} onClick={() => updateTask(task)} />
     ) : (
       <input
         type="button"
@@ -130,24 +139,12 @@ const Home = () => {
             </li>
           )}
           {tasks.map((task) => (
-            <>
+            <div key={task.id}>
               <li className={styles.taskHeader}>
-                <div className={styles.authorDetails}>
-                  {task.author.photoURL !== undefined ? (
-                    <img
-                      className={styles.authorIcon}
-                      src={task.author.photoURL}
-                      height={24}
-                      alt={task.author.name}
-                    />
-                  ) : (
-                    <HumanIcon size={24} fill="#555" />
-                  )}
-                  <div className={styles.authorName}>{task.author.name}</div>
-                </div>
-                <div className={styles.taskTime}>{timeSince(task.createdTime)}</div>
+                <div className={styles.authorName}>{task.author.name}</div>
+                <ElapsedTime size={16} color="#777" createdTime={task.createdTime} />
               </li>
-              <li className={styles.label} key={task.id}>
+              <li className={styles.label}>
                 {user && user.id === task.author.userId ? (
                   <label>
                     <div className={styles.editGroup}>
@@ -173,7 +170,7 @@ const Home = () => {
                 )}
                 {renderTaskImage(task)}
               </li>
-            </>
+            </div>
           ))}
         </ul>
       </div>
