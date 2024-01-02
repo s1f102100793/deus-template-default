@@ -1,4 +1,6 @@
-export const ElapsedTime = (props: { size: number; color: string; createdTime: number }) => {
+import styles from './ElapsedTime.module.css';
+
+export const ElapsedTime = (props: { createdTime: number }) => {
   const now = Date.now();
   const secondsPast = (now - props.createdTime) / 1000;
 
@@ -17,5 +19,5 @@ export const ElapsedTime = (props: { size: number; color: string; createdTime: n
     displayDate = `${month} ${day}${year}`;
   }
 
-  return <span style={{ fontSize: `${props.size}px`, color: props.color }}>{displayDate}</span>;
+  return <span className={styles.date}>{displayDate}</span>;
 };

@@ -58,24 +58,9 @@
   width: 100%;
 }
 
-.editGroup,
-.btnGroup {
-  display: flex;
-  gap: 8px;
-}
-
-.labelInput {
-  width: 400px;
-  padding: 2px;
-}
-
 .postBtn {
   display: flex;
   align-self: flex-end;
-  padding: 2px;
-}
-
-.btn {
   padding: 2px;
 }
 
