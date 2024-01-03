@@ -18,11 +18,7 @@ const Home = () => {
   const [label, setLabel] = useState('');
   const [image, setImage] = useState<File>();
   const [previewImageUrl, setPreviewImageUrl] = useState('');
-  const hasPreviewImage = () => previewImageUrl !== null;
-  const isPrivateTask = (task: TaskModel) => {
-    return user !== null && user.id === task.author.userId;
-  };
-  const isValidImageUrl = (task: TaskModel) => task.image?.url !== undefined;
+  const isPrivateTask = (task: TaskModel) => user?.id === task.author.userId;
 
   const inputLabel = (e: ChangeEvent<HTMLInputElement>) => {
     setLabel(e.target.value);
@@ -52,13 +48,13 @@ const Home = () => {
   }, [user?.id]);
 
   useEffect(() => {
-    if (image) {
-      const newUrl = URL.createObjectURL(image);
-      setPreviewImageUrl(newUrl);
-      return () => {
-        URL.revokeObjectURL(newUrl);
-      };
-    }
+    if (!image) return;
+
+    const newUrl = URL.createObjectURL(image);
+    setPreviewImageUrl(newUrl);
+    return () => {
+      URL.revokeObjectURL(newUrl);
+    };
   }, [image]);
 
   if (!tasks) return <Loading visible />;
@@ -77,7 +73,7 @@ const Home = () => {
                 onChange={inputLabel}
                 className={styles.createTaskInput}
               />
-              {hasPreviewImage() && <img src={previewImageUrl} className={styles.taskImage} />}
+              {image && <img src={previewImageUrl} className={styles.taskImage} />}
               <input
                 type="file"
                 ref={fileRef}
@@ -101,7 +97,7 @@ const Home = () => {
                 ) : (
                   <span>{task.label}</span>
                 )}
-                {isValidImageUrl(task) && (
+                {task.image !== undefined && task.image.url !== null && (
                   <img src={task.image?.url} alt={task.label} className={styles.taskImage} />
                 )}
               </li>
