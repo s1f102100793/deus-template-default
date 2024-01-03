@@ -1,0 +1,30 @@
+name: Schema Validation
+
+on:
+  push:
+    branches: [deus/schema-validation]
+
+jobs:
+  validation:
+    name: Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: actions/cache@v2
+        id: server-npm-cache
+        with:
+          path: 'server/node_modules'
+          key: server-npm-${{ hashFiles('server/package-lock.json') }}
+      - run: npm install --prefix server
+        if: steps.server-npm-cache.outputs.cache-hit != 'true'
+      - name: validation
+        run: npm run lint:prisma
