@@ -24,7 +24,7 @@ export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<
     await apiClient.private.tasks.delete({ body: { taskId: task.id } }).catch(returnNull);
     await props.fetchTasks();
   };
-  const updateTask = async () => {
+  const updateTaskLabel = async () => {
     await apiClient.private.tasks
       .patch({ body: { taskId: task.id, label: editingLabel } })
       .catch(returnNull);
@@ -55,7 +55,7 @@ export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<
       <div className={styles.btnGroup}>
         <input type="button" value="DELETE" className={styles.btn} onClick={deleteTask} />
         {isEditing ? (
-          <input type="button" value="SAVE" className={styles.btn} onClick={updateTask} />
+          <input type="button" value="SAVE" className={styles.btn} onClick={updateTaskLabel} />
         ) : (
           <input type="button" value="EDIT" className={styles.btn} onClick={startEditTask} />
         )}
