@@ -13,6 +13,7 @@
     "generate": "run-s generate:prisma generate:frourio",
     "generate:frourio": "frourio",
     "generate:prisma": "prisma generate",
+    "lint:prisma": "prisma format",
     "migrate:dev": "prisma migrate dev && npx prisma db seed",
     "migrate:dev:createonly": "prisma migrate dev --create-only",
     "migrate:deploy": "prisma migrate deploy && npx prisma db seed",
