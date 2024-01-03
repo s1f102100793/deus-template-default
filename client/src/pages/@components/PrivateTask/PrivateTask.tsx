@@ -16,7 +16,7 @@ export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<
   };
   const toggleDone = async () => {
     await apiClient.private.tasks
-      .patch({ body: { taskId: task.id, done: !task.done, label: task.label } })
+      .patch({ body: { taskId: task.id, done: !task.done } })
       .catch(returnNull);
     await props.fetchTasks();
   };
@@ -26,7 +26,7 @@ export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<
   };
   const updateTask = async () => {
     await apiClient.private.tasks
-      .patch({ body: { taskId: task.id, done: task.done, label: editingLabel } })
+      .patch({ body: { taskId: task.id, label: editingLabel } })
       .catch(returnNull);
     setEditingTaskId(undefined);
     setEditingLabel('');
@@ -40,7 +40,7 @@ export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<
   return (
     <label>
       <div className={styles.editGroup}>
-        <input type="checkbox" checked={task.done} onChange={() => toggleDone()} />
+        <input type="checkbox" checked={task.done} onChange={toggleDone} />
         {isEditing ? (
           <input
             type="text"
@@ -53,16 +53,11 @@ export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<
         )}
       </div>
       <div className={styles.btnGroup}>
-        <input type="button" value="DELETE" className={styles.btn} onClick={() => deleteTask()} />
+        <input type="button" value="DELETE" className={styles.btn} onClick={deleteTask} />
         {isEditing ? (
-          <input type="button" value="SAVE" className={styles.btn} onClick={() => updateTask()} />
+          <input type="button" value="SAVE" className={styles.btn} onClick={updateTask} />
         ) : (
-          <input
-            type="button"
-            value="EDIT"
-            className={styles.btn}
-            onClick={() => startEditTask()}
-          />
+          <input type="button" value="EDIT" className={styles.btn} onClick={startEditTask} />
         )}
       </div>
     </label>

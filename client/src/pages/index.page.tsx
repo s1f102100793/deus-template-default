@@ -97,8 +97,8 @@ const Home = () => {
                 ) : (
                   <span>{task.label}</span>
                 )}
-                {task.image !== undefined && task.image.url !== null && (
-                  <img src={task.image?.url} alt={task.label} className={styles.taskImage} />
+                {task.image && (
+                  <img src={task.image.url} alt={task.label} className={styles.taskImage} />
                 )}
               </li>
             </div>

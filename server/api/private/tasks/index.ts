@@ -15,8 +15,8 @@ export type Methods = DefineMethods<{
   patch: {
     reqBody: {
       taskId: Maybe<TaskId>;
-      done: boolean;
-      label: string;
+      done?: boolean;
+      label?: string;
     };
     status: 204;
     resBody: TaskModel;

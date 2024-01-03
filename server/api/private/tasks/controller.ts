@@ -17,8 +17,8 @@ export default defineController(() => ({
     validators: {
       body: z.object({
         taskId: taskIdParser,
-        done: z.boolean(),
-        label: z.string(),
+        done: z.boolean().optional(),
+        label: z.string().optional(),
       }),
     },
     handler: async ({ user, body }) => {
