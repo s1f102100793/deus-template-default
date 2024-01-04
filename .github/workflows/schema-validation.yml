@@ -1,4 +1,4 @@
-name: Schema Validation
+name: schema validation
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
 
 jobs:
   validation:
-    name: Validation
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

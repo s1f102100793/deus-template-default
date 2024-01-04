@@ -1,4 +1,4 @@
-name: Test
+name: test
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
 
 jobs:
   test:
-    name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -106,4 +105,4 @@ jobs:
           SHORT_SHA=$(git rev-parse --short HEAD)
           git add .
           git commit -m "copy: $SHORT_SHA"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:copy-deus-types -f
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:deus/test-types -f

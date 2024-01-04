@@ -1,10 +1,9 @@
-name: PR Test
+name: pull request test
 
 on: pull_request
 
 jobs:
   test:
-    name: PR Test
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
