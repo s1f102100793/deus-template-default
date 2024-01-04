@@ -26,12 +26,7 @@ export const taskUseCase = {
 
       await taskRepo.delete(tx, deletableTaskId);
     }),
-  update: (
-    user: UserModel,
-    taskId: Maybe<TaskId>,
-    done: boolean | undefined,
-    label: string | undefined
-  ) =>
+  update: (user: UserModel, taskId: Maybe<TaskId>, done: boolean, label: string) =>
     transaction<TaskModel>('RepeatableRead', async (tx) => {
       const task = await taskRepo.findByIdOrThrow(tx, taskId);
       const newTask = taskModel.updateOrThrow(user, task, { done, label });

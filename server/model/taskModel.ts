@@ -28,14 +28,13 @@ export const taskModel = {
   updateOrThrow: (
     user: UserModel,
     task: TaskModel,
-    updateData: { done?: boolean; label?: string }
+    updateData: { done: boolean; label: string }
   ): TaskModel => {
     if (user.id !== task.author.userId) throw new Error('cannot update task');
 
     return {
       ...task,
-      ...(updateData.done !== undefined && { done: updateData.done }),
-      ...(updateData.label !== undefined && { label: updateData.label }),
+      ...updateData,
     };
   },
 };

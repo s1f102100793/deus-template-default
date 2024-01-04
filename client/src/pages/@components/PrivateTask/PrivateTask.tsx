@@ -16,7 +16,7 @@ export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<
   };
   const toggleDone = async () => {
     await apiClient.private.tasks
-      .patch({ body: { taskId: task.id, done: !task.done } })
+      .patch({ body: { taskId: task.id, done: !task.done, label: task.label } })
       .catch(returnNull);
     await props.fetchTasks();
   };
@@ -26,7 +26,7 @@ export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<
   };
   const updateTaskLabel = async () => {
     await apiClient.private.tasks
-      .patch({ body: { taskId: task.id, label: editingLabel } })
+      .patch({ body: { taskId: task.id, done: task.done, label: editingLabel } })
       .catch(returnNull);
     setEditingTaskId(undefined);
     setEditingLabel('');
