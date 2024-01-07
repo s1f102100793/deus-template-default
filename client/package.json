@@ -25,7 +25,6 @@
     "api": "file:../server/api",
     "aspida": "^1.14.0",
     "axios": "^1.4.0",
-    "commonConstantsWithClient": "file:../server/commonConstantsWithClient",
     "commonTypesWithClient": "file:../server/commonTypesWithClient",
     "jotai": "^2.2.3",
     "next": "^13.5.6",

@@ -1,9 +1,9 @@
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { APP_TITLE } from 'commonConstantsWithClient';
 import type { UserModel } from 'commonTypesWithClient/models';
 import { useState } from 'react';
 import { Modal, ModalBody } from 'src/components/Modal/Modal';
+import { APP_TITLE } from 'src/utils/constants';
 import { supabase } from 'src/utils/supabase';
 import styles from './BasicHeader.module.css';
 
