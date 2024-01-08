@@ -35,10 +35,10 @@ jobs:
           key: server-npm-${{ hashFiles('server/package-lock.json') }}
       - run: npm install & npm install --prefix client & npm install --prefix server & wait
         if: steps.root-npm-cache.outputs.cache-hit != 'true' || steps.client-npm-cache.outputs.cache-hit != 'true' || steps.server-npm-cache.outputs.cache-hit != 'true'
-      - name: generate
-        run: npm run generate
       - name: lint
         run: npm run lint:fix
+      - name: generate
+        run: npm run generate
       - name: typecheck
         run: npm run typecheck
       - run: |

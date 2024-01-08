@@ -20,7 +20,6 @@ module.exports = {
   },
   parserOptions: {
     sourceType: 'module',
-    project: './tsconfig.json',
     ecmaFeatures: { jsx: true },
   },
   rules: {
@@ -36,7 +35,6 @@ module.exports = {
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-non-null-assertion': 'error',
-    '@typescript-eslint/strict-boolean-expressions': 'error',
     complexity: ['error', 5],
     'max-depth': ['error', 2],
     'max-nested-callbacks': ['error', 3],

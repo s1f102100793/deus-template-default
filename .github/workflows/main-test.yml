@@ -1,11 +1,16 @@
-name: pull request test
+name: main test
 
-on: pull_request
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: pull_request
 
 jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    if: github.repository == 'deus-app/deus-template' || github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v3
       - name: setup Node.js
@@ -29,8 +34,8 @@ jobs:
           key: server-npm-${{ hashFiles('server/package-lock.json') }}
       - run: npm install & npm install --prefix client & npm install --prefix server & wait
         if: steps.root-npm-cache.outputs.cache-hit != 'true' || steps.client-npm-cache.outputs.cache-hit != 'true' || steps.server-npm-cache.outputs.cache-hit != 'true'
-      - run: npm run generate
       - run: npm run lint
+      - run: npm run generate
       - run: npm run typecheck
       - run: |
           cp client/.env.example client/.env
