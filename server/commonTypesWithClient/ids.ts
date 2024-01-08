@@ -1,9 +1,5 @@
-import type { z } from 'zod';
+type Id<T extends string> = { type: T; val: string };
 
-type Branded<T extends string> = string & z.BRAND<T>;
-
-export type Maybe<T> = T | Branded<'Maybe'>;
-
-export type UserId = Branded<'UserId'>;
-export type TaskId = Branded<'TaskId'>;
-export type DeletableTaskId = Branded<'DeletableTaskId'>;
+export type UserId = Id<'User'>;
+export type TaskId = Id<'Task'>;
+export type DeletableTaskId = Id<'DeletableTask'>;

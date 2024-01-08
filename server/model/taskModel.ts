@@ -1,7 +1,6 @@
 import type { DeletableTaskId } from '$/commonTypesWithClient/ids';
 import type { TaskModel, UserModel } from '$/commonTypesWithClient/models';
 import { S3_PREFIX } from '$/repository/s3Repo';
-import { deletableTaskIdParser, taskIdParser } from '$/service/idParsers';
 import type { MultipartFile } from '@fastify/multipart';
 import { randomUUID } from 'crypto';
 
@@ -13,7 +12,7 @@ const dataToUrl = (data: MultipartFile) => {
 
 export const taskModel = {
   create: (user: UserModel, label: string, data: MultipartFile | undefined): TaskModel => ({
-    id: taskIdParser.parse(randomUUID()),
+    id: { type: 'Task', val: randomUUID() },
     done: false,
     label,
     image: data === undefined ? undefined : dataToUrl(data),
@@ -23,7 +22,7 @@ export const taskModel = {
   deleteOrThrow: (user: UserModel, task: TaskModel): DeletableTaskId => {
     if (user.id !== task.author.userId) throw new Error('cannot delete');
 
-    return deletableTaskIdParser.parse(task.id);
+    return { type: 'DeletableTask', val: task.id.val };
   },
   updateOrThrow: (
     user: UserModel,
@@ -32,9 +31,6 @@ export const taskModel = {
   ): TaskModel => {
     if (user.id !== task.author.userId) throw new Error('cannot update task');
 
-    return {
-      ...task,
-      ...updateData,
-    };
+    return { ...task, ...updateData };
   },
 };

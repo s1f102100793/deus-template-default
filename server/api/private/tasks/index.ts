@@ -1,5 +1,5 @@
 import type { DefineMethods } from 'aspida';
-import type { Maybe, TaskId } from 'commonTypesWithClient/ids';
+import type { TaskId } from 'commonTypesWithClient/ids';
 import type { TaskModel } from 'commonTypesWithClient/models';
 
 export type Methods = DefineMethods<{
@@ -14,7 +14,7 @@ export type Methods = DefineMethods<{
 
   patch: {
     reqBody: {
-      taskId: Maybe<TaskId>;
+      taskId: TaskId;
       done: boolean;
       label: string;
     };
@@ -24,7 +24,7 @@ export type Methods = DefineMethods<{
 
   delete: {
     reqBody: {
-      taskId: Maybe<TaskId>;
+      taskId: TaskId;
     };
     status: 204;
   };

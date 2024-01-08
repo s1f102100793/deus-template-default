@@ -8,7 +8,7 @@ export const userModel = {
     return {
       id: jwtUser.sub,
       email: jwtUser.email,
-      name: jwtUser.sub.split('-')[0],
+      name: jwtUser.sub.val.split('-')[0],
       createdTime: Date.now(),
     };
   },

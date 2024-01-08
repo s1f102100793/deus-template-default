@@ -1,4 +1,4 @@
-import type { Maybe, TaskId } from '$/commonTypesWithClient/ids';
+import type { TaskId } from '$/commonTypesWithClient/ids';
 import type { TaskModel, UserModel } from '$/commonTypesWithClient/models';
 import { taskModel } from '$/model/taskModel';
 import { s3Repo } from '$/repository/s3Repo';
@@ -19,14 +19,14 @@ export const taskUseCase = {
 
       return task;
     }),
-  delete: (user: UserModel, taskId: Maybe<TaskId>) =>
+  delete: (user: UserModel, taskId: TaskId) =>
     transaction('RepeatableRead', async (tx) => {
       const task = await taskRepo.findByIdOrThrow(tx, taskId);
       const deletableTaskId = taskModel.deleteOrThrow(user, task);
 
       await taskRepo.delete(tx, deletableTaskId);
     }),
-  update: (user: UserModel, taskId: Maybe<TaskId>, done: boolean, label: string) =>
+  update: (user: UserModel, taskId: TaskId, done: boolean, label: string) =>
     transaction<TaskModel>('RepeatableRead', async (tx) => {
       const task = await taskRepo.findByIdOrThrow(tx, taskId);
       const newTask = taskModel.updateOrThrow(user, task, { done, label });

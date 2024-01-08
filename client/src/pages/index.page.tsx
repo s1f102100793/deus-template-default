@@ -86,7 +86,7 @@ const Home = () => {
             </li>
           )}
           {tasks.map((task) => (
-            <div key={task.id}>
+            <div key={task.id.val}>
               <li className={styles.taskHeader}>
                 <div className={styles.authorName}>{task.author.name}</div>
                 <ElapsedTime createdTime={task.createdTime} />
