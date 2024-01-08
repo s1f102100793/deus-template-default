@@ -1,5 +1,5 @@
-import type { TaskId } from 'commonTypesWithClient/ids';
-import type { TaskModel } from 'commonTypesWithClient/models';
+import type { TaskId } from '$/commonTypes/ids';
+import type { TaskModel } from '$/commonTypes/models';
 import { useState, type ChangeEvent } from 'react';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';

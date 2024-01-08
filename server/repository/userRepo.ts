@@ -1,5 +1,5 @@
-import type { UserId } from '$/commonTypesWithClient/ids';
-import type { UserModel } from '$/commonTypesWithClient/models';
+import type { UserId } from '$/commonTypes/ids';
+import type { UserModel } from '$/commonTypes/models';
 import type { Prisma, User } from '@prisma/client';
 
 const toModel = (prismaUser: User): UserModel => ({

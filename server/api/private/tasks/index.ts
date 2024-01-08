@@ -1,6 +1,6 @@
+import type { TaskId } from '$/commonTypes/ids';
+import type { TaskModel } from '$/commonTypes/models';
 import type { DefineMethods } from 'aspida';
-import type { TaskId } from 'commonTypesWithClient/ids';
-import type { TaskModel } from 'commonTypesWithClient/models';
 
 export type Methods = DefineMethods<{
   post: {

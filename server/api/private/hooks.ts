@@ -1,4 +1,4 @@
-import type { UserModel } from '$/commonTypesWithClient/models';
+import type { UserModel } from '$/commonTypes/models';
 import type { JwtUser } from '$/model/userModel';
 import { userRepo } from '$/repository/userRepo';
 import type { JWT_PROP_NAME } from '$/service/constants';
@@ -22,7 +22,7 @@ export default defineHooks(() => ({
   preHandler: async (req, res) => {
     assert(req.jwtUser);
 
-    const user = await userRepo.findById(prismaClient, req.jwtUser.sub);
+    const user = await userRepo.findById(prismaClient, { type: 'User', val: req.jwtUser.sub });
 
     if (user === null) {
       res.status(401).send();

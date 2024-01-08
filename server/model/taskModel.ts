@@ -1,5 +1,5 @@
-import type { DeletableTaskId } from '$/commonTypesWithClient/ids';
-import type { TaskModel, UserModel } from '$/commonTypesWithClient/models';
+import type { DeletableTaskId } from '$/commonTypes/ids';
+import type { TaskModel, UserModel } from '$/commonTypes/models';
 import { S3_PREFIX } from '$/repository/s3Repo';
 import type { MultipartFile } from '@fastify/multipart';
 import { randomUUID } from 'crypto';

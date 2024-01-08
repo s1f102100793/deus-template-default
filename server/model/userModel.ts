@@ -1,14 +1,13 @@
-import type { UserId } from '$/commonTypesWithClient/ids';
-import type { UserModel } from '$/commonTypesWithClient/models';
+import type { UserModel } from '$/commonTypes/models';
 
-export type JwtUser = { sub: UserId; email: string; role: 'authenticated' | 'anon' };
+export type JwtUser = { sub: string; email: string; role: 'authenticated' | 'anon' };
 
 export const userModel = {
   create: (jwtUser: JwtUser): UserModel => {
     return {
-      id: jwtUser.sub,
+      id: { type: 'User', val: jwtUser.sub },
       email: jwtUser.email,
-      name: jwtUser.sub.val.split('-')[0],
+      name: jwtUser.sub.split('-')[0],
       createdTime: Date.now(),
     };
   },

@@ -1,5 +1,5 @@
+import type { UserModel } from '$/commonTypes/models';
 import type { DefineMethods } from 'aspida';
-import type { UserModel } from 'commonTypesWithClient/models';
 
 export type Methods = DefineMethods<{
   post: {

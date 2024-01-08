@@ -1,5 +1,5 @@
-import type { TaskId } from '$/commonTypesWithClient/ids';
-import type { TaskModel, UserModel } from '$/commonTypesWithClient/models';
+import type { TaskId } from '$/commonTypes/ids';
+import type { TaskModel, UserModel } from '$/commonTypes/models';
 import { taskModel } from '$/model/taskModel';
 import { s3Repo } from '$/repository/s3Repo';
 import { taskRepo } from '$/repository/taskRepo';
