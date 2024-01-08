@@ -1,4 +1,4 @@
-import { taskUseCase } from '$/useCase/taskUseCase';
+import { taskUseCase } from '$/domain/useCase/taskUseCase';
 import { z } from 'zod';
 import { defineController, multipartFileValidator } from './$relay';
 

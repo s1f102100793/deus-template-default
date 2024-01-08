@@ -1,4 +1,4 @@
-import { taskRepo } from '$/repository/taskRepo';
+import { taskRepo } from '$/domain/repository/taskRepo';
 import { prismaClient } from '$/service/prismaClient';
 import { defineController } from './$relay';
 

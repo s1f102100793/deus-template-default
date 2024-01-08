@@ -1,4 +1,4 @@
-import { userUseCase } from '$/useCase/userUseCase';
+import { userUseCase } from '$/domain/useCase/userUseCase';
 import assert from 'assert';
 import { defineController } from './$relay';
 

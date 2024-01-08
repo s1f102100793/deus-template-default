@@ -1,5 +1,5 @@
 import type { TaskModel, UserModel } from '$/api/@types/models';
-import { S3_PREFIX } from '$/repository/s3Repo';
+import { S3_PREFIX } from '$/domain/repository/s3Repo';
 import type { MultipartFile } from '@fastify/multipart';
 import { randomUUID } from 'crypto';
 

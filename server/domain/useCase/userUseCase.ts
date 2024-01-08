@@ -1,7 +1,7 @@
 import type { UserModel } from '$/api/@types/models';
-import type { JwtUser } from '$/model/userModel';
-import { userModel } from '$/model/userModel';
-import { userRepo } from '$/repository/userRepo';
+import type { JwtUser } from '$/domain/model/userModel';
+import { userModel } from '$/domain/model/userModel';
+import { userRepo } from '$/domain/repository/userRepo';
 import { transaction } from '$/service/prismaClient';
 
 export const userUseCase = {
