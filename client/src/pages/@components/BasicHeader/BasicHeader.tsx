@@ -1,7 +1,7 @@
+import type { UserModel } from '$/api/@types/models';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useState } from 'react';
-import type { UserModel } from 'src/commonTypes/models';
 import { Modal, ModalBody } from 'src/components/Modal/Modal';
 import { APP_TITLE } from 'src/utils/constants';
 import { supabase } from 'src/utils/supabase';

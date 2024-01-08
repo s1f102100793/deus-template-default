@@ -1,4 +1,4 @@
-import type { UserModel } from '$/commonTypes/models';
+import type { UserModel } from '$/api/@types/models';
 import type { DefineMethods } from 'aspida';
 
 export type Methods = DefineMethods<{

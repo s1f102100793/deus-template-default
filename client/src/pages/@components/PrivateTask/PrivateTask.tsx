@@ -1,5 +1,4 @@
-import type { TaskId } from '$/commonTypes/ids';
-import type { TaskModel } from '$/commonTypes/models';
+import type { TaskModel } from '$/api/@types/models';
 import { useState, type ChangeEvent } from 'react';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
@@ -7,7 +6,7 @@ import styles from './PrivateTask.module.css';
 
 export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<void> }) => {
   const { task } = props;
-  const [editingTaskId, setEditingTaskId] = useState<TaskId>();
+  const [editingTaskId, setEditingTaskId] = useState<string>();
   const [editingLabel, setEditingLabel] = useState('');
   const isEditing = editingTaskId === task.id;
 

@@ -15,7 +15,7 @@ export default defineController(() => ({
   patch: {
     validators: {
       body: z.object({
-        taskId: z.object({ type: z.literal('Task'), val: z.string() }),
+        taskId: z.string(),
         done: z.boolean(),
         label: z.string(),
       }),

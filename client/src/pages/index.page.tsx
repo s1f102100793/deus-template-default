@@ -1,7 +1,7 @@
+import type { TaskModel } from '$/api/@types/models';
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import type { TaskModel } from 'src/commonTypes/models';
 import { ElapsedTime } from 'src/components/ElapsedTime/ElapsedTime';
 import { Loading } from 'src/components/Loading/Loading';
 import { BasicHeader } from 'src/pages/@components/BasicHeader/BasicHeader';
@@ -86,7 +86,7 @@ const Home = () => {
             </li>
           )}
           {tasks.map((task) => (
-            <div key={task.id.val}>
+            <div key={task.id}>
               <li className={styles.taskHeader}>
                 <div className={styles.authorName}>{task.author.name}</div>
                 <ElapsedTime createdTime={task.createdTime} />

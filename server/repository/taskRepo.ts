@@ -1,10 +1,10 @@
-import type { DeletableTaskId, TaskId } from '$/commonTypes/ids';
-import type { TaskModel } from '$/commonTypes/models';
+import type { TaskModel } from '$/api/@types/models';
+import type { DeletableTaskId } from '$/model/taskModel';
 import type { Prisma, Task, User } from '@prisma/client';
 import { S3_PREFIX } from './s3Repo';
 
 const toModel = (task: Task & { User: User }): TaskModel => ({
-  id: { type: 'Task', val: task.id },
+  id: task.id,
   label: task.label,
   done: task.done,
   createdTime: task.createdAt.getTime(),
@@ -12,17 +12,17 @@ const toModel = (task: Task & { User: User }): TaskModel => ({
     task.imageKey === null
       ? undefined
       : { url: `${S3_PREFIX}${task.imageKey}`, s3Key: task.imageKey },
-  author: { userId: { type: 'User', val: task.userId }, name: task.User.name },
+  author: { userId: task.userId, name: task.User.name },
 });
 
 export const taskRepo = {
   save: async (tx: Prisma.TransactionClient, task: TaskModel) => {
     await tx.task.upsert({
-      where: { id: task.id.val },
+      where: { id: task.id },
       update: { done: task.done, label: task.label, imageKey: task.image?.s3Key },
       create: {
-        id: task.id.val,
-        userId: task.author.userId.val,
+        id: task.id,
+        userId: task.author.userId,
         done: task.done,
         label: task.label,
         imageKey: task.image?.s3Key,
@@ -37,6 +37,6 @@ export const taskRepo = {
     tx.task
       .findMany({ take: limit, include: { User: true }, orderBy: { createdAt: 'desc' } })
       .then((tasks) => tasks.map(toModel)),
-  findByIdOrThrow: (tx: Prisma.TransactionClient, id: TaskId): Promise<TaskModel> =>
-    tx.task.findUniqueOrThrow({ where: { id: id.val }, include: { User: true } }).then(toModel),
+  findByIdOrThrow: (tx: Prisma.TransactionClient, taskId: string): Promise<TaskModel> =>
+    tx.task.findUniqueOrThrow({ where: { id: taskId }, include: { User: true } }).then(toModel),
 };

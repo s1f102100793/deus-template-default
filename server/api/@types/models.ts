@@ -1,20 +1,15 @@
-import type { TaskId, UserId } from './ids';
-
 export type UserModel = {
-  id: UserId;
+  id: string;
   email: string;
   name: string;
   createdTime: number;
 };
 
 export type TaskModel = {
-  id: TaskId;
+  id: string;
   label: string;
   done: boolean;
   createdTime: number;
   image: { url: string; s3Key: string } | undefined;
-  author: {
-    userId: UserId;
-    name: string;
-  };
+  author: { userId: string; name: string };
 };
