@@ -1,4 +1,4 @@
-import type { UserModel } from '$/api/@types/models';
+import type { User } from '$/api/@types';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { APP_TITLE } from 'src/utils/constants';
 import { supabase } from 'src/utils/supabase';
 import styles from './BasicHeader.module.css';
 
-export const BasicHeader = (props: { user: UserModel | null }) => {
+export const BasicHeader = (props: { user: User | null }) => {
   const [opened, setOpened] = useState(false);
   const onLogout = async () => {
     setOpened(false);

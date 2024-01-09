@@ -1,4 +1,5 @@
-import type { TaskModel, UserModel } from '$/api/@types/models';
+import type { User } from '$/api/@types';
+import type { TaskModel } from '$/api/@types/models';
 import { S3_PREFIX } from '$/domain/repository/s3Repo';
 import type { MultipartFile } from '@fastify/multipart';
 import { randomUUID } from 'crypto';
@@ -12,7 +13,7 @@ const dataToUrl = (data: MultipartFile) => {
 export type DeletableTaskId = { type: 'DeletableTask'; val: string };
 
 export const taskModel = {
-  create: (user: UserModel, label: string, data: MultipartFile | undefined): TaskModel => ({
+  create: (user: User, label: string, data: MultipartFile | undefined): TaskModel => ({
     id: randomUUID(),
     done: false,
     label,
@@ -20,13 +21,13 @@ export const taskModel = {
     createdTime: Date.now(),
     author: { userId: user.id, name: user.name },
   }),
-  deleteOrThrow: (user: UserModel, task: TaskModel): DeletableTaskId => {
+  deleteOrThrow: (user: User, task: TaskModel): DeletableTaskId => {
     if (user.id !== task.author.userId) throw new Error('cannot delete');
 
     return { type: 'DeletableTask', val: task.id };
   },
   updateOrThrow: (
-    user: UserModel,
+    user: User,
     task: TaskModel,
     updateData: { done: boolean; label: string }
   ): TaskModel => {

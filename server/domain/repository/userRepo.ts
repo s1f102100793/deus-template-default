@@ -1,27 +1,21 @@
-import type { UserModel } from '$/api/@types/models';
-import type { Prisma, User } from '@prisma/client';
+import type { User } from '$/api/@types';
+import type { Prisma, User as PrismaUser } from '@prisma/client';
 
-const toModel = (prismaUser: User): UserModel => ({
+const toModel = (prismaUser: PrismaUser): User => ({
   id: prismaUser.id,
   email: prismaUser.email,
   name: prismaUser.name,
-  createdTime: prismaUser.createdAt.getTime(),
 });
 
 export const userRepo = {
-  save: async (tx: Prisma.TransactionClient, user: UserModel) => {
+  save: async (tx: Prisma.TransactionClient, user: User) => {
     return tx.user.upsert({
       where: { id: user.id },
       update: { email: user.email, name: user.name },
-      create: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        createdAt: new Date(user.createdTime),
-      },
+      create: { id: user.id, email: user.email, name: user.name },
     });
   },
-  findById: (tx: Prisma.TransactionClient, userId: string): Promise<UserModel | null> =>
+  findById: (tx: Prisma.TransactionClient, userId: string): Promise<User | null> =>
     tx.user
       .findUnique({ where: { id: userId } })
       .then((user) => (user !== null ? toModel(user) : null)),

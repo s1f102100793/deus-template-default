@@ -3,12 +3,12 @@ import { userRepo } from '$/domain/repository/userRepo';
 import type { JWT_PROP_NAME } from '$/service/constants';
 import { prismaClient } from '$/service/prismaClient';
 import assert from 'assert';
-import type { UserModel } from '../@types/models';
+import type { User } from '../@types';
 import { defineHooks } from './$relay';
 
 export type AdditionalRequest = {
   [Key in typeof JWT_PROP_NAME]: JwtUser;
-} & { user: UserModel };
+} & { user: User };
 
 export default defineHooks(() => ({
   onRequest: async (req, res) => {
