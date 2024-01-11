@@ -41,16 +41,16 @@
   border-radius: 50%;
 }
 
+.loginText {
+  color: white;
+}
+
 .userName .loginText {
   font-weight: bold;
 }
 
 .userName {
   color: #555;
-}
-
-.loginText {
-  color: white;
 }
 
 .loginBtn {
@@ -77,10 +77,10 @@
   }
 
   .title {
-    white-space: nowrap;
+    flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-grow: 1;
+    white-space: nowrap;
   }
 
   .userBtn,
@@ -92,18 +92,18 @@
     display: block;
     width: 24px;
     height: 4px;
-    background: #0d0e59;
     margin: 0 auto;
+    background: #0d0e59;
   }
 
   .hamburgerIcon::before,
   .hamburgerIcon::after {
-    content: '';
+    position: absolute;
     display: block;
     width: 24px;
     height: 4px;
+    content: '';
     background: #0d0e59;
-    position: absolute;
   }
 
   .hamburgerIcon::before {
