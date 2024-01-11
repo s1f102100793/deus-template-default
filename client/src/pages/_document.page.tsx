@@ -1,15 +1,15 @@
 import { Head, Html, Main, NextScript } from 'next/document';
 import { staticPath } from 'src/utils/$path';
-import { APP_TITLE } from 'src/utils/constants';
+import { APP_NAME } from 'src/utils/constants';
 import { GA_ID } from 'src/utils/gtag';
 
 function Document() {
   return (
     <Html lang="ja">
       <Head>
-        <title>{APP_TITLE}</title>
+        <title>{APP_NAME}</title>
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="description" content={APP_TITLE} />
+        <meta name="description" content={APP_NAME} />
         <link rel="icon" href={staticPath.favicon_png} />
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
         <script

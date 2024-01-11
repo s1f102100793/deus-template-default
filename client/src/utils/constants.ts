@@ -1,1 +1,1 @@
-export const APP_TITLE = 'deus-template';
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? '';
