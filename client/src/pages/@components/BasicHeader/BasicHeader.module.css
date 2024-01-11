@@ -89,12 +89,11 @@
   }
 
   .hamburgerIcon {
-    justify-content: center;
-    background-color: #fafafa;
-    padding: 8px;
-    padding-top: 14px;
-    height: 32px;
-    position: relative;
+    display: block;
+    width: 24px;
+    height: 4px;
+    background: #0d0e59;
+    margin: 0 auto;
   }
 
   .hamburgerIcon::before,
@@ -105,27 +104,13 @@
     height: 4px;
     background: #0d0e59;
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
   }
 
   .hamburgerIcon::before {
-    top: 6px;
+    top: 12px;
   }
 
   .hamburgerIcon::after {
-    bottom: 6px;
-  }
-
-  .hamburgerIcon span {
-    display: block;
-    width: 24px;
-    height: 4px;
-    background: #0d0e59;
-    margin: 0 auto;
-  }
-
-  .loginBtn + .hamburgerIcon:hover {
-    background: #0d0e5988;
+    bottom: 12px;
   }
 }
