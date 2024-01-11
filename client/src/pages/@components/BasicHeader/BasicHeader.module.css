@@ -1,7 +1,7 @@
 .container {
   position: sticky;
   top: 0;
-  height: 48px;
+  height: 47px;
   background: #fafafa;
   border-bottom: 1px solid #eee;
 }
@@ -35,17 +35,22 @@
 
 .userBtn:hover {
   background: white;
-  border-color: #eee;
 }
 
 .userIcon {
   border-radius: 50%;
 }
 
-.userName {
-  font-size: 14px;
+.userName .loginText {
   font-weight: bold;
+}
+
+.userName {
   color: #555;
+}
+
+.loginText {
+  color: white;
 }
 
 .loginBtn {
@@ -67,7 +72,45 @@
 }
 
 @media screen and (max-width: 640px) {
-  .userName {
+  .main {
+    justify-content: space-between;
+  }
+
+  .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+  }
+
+  .userBtn,
+  .loginBtn {
     display: none;
+  }
+
+  .hamburgerIcon {
+    display: block;
+    width: 24px;
+    height: 4px;
+    background: #0d0e59;
+    margin: 0 auto;
+  }
+
+  .hamburgerIcon::before,
+  .hamburgerIcon::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 4px;
+    background: #0d0e59;
+    position: absolute;
+  }
+
+  .hamburgerIcon::before {
+    top: 12px;
+  }
+
+  .hamburgerIcon::after {
+    bottom: 12px;
   }
 }

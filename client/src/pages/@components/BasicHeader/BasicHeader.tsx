@@ -21,12 +21,16 @@ export const BasicHeader = (props: { user: User | null }) => {
         {props.user === null ? (
           <div onClick={() => setOpened(true)}>
             <div className={styles.loginBtn}>
-              <span>Login with Email</span>
+              <span className={styles.loginText}>Login with Email</span>
             </div>
+            <div className={styles.hamburgerIcon} />
           </div>
         ) : (
-          <div className={styles.userBtn} onClick={onLogout}>
-            <span className={styles.userName}>{props.user.name}</span>
+          <div onClick={onLogout}>
+            <div className={styles.userBtn}>
+              <span className={styles.userName}>{props.user.name}</span>
+            </div>
+            <div className={styles.hamburgerIcon} />
           </div>
         )}
       </div>
