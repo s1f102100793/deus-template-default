@@ -35,7 +35,6 @@
 
 .userBtn:hover {
   background: white;
-  border-color: #eee;
 }
 
 .userIcon {
@@ -43,9 +42,11 @@
 }
 
 .userName {
-  font-size: 14px;
   font-weight: bold;
   color: #555;
+}
+.loginText {
+  color: white;
 }
 
 .loginBtn {
@@ -67,7 +68,74 @@
 }
 
 @media screen and (max-width: 640px) {
-  .userName {
-    display: none;
+  .main {
+    justify-content: space-between;
+  }
+  .title {
+    margin: 0 auto;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+  }
+  .userBtn,
+  .loginBtn {
+    justify-content: center;
+    background-color: #fff9f9;
+    padding: 8px;
+    font-size: 0;
+    height: 32px;
+    position: relative;
+  }
+
+  .userBtn::after,
+  .userBtn::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 4px;
+    font-size: 0;
+    background: #0d0e59;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .loginBtn::before,
+  .loginBtn::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 4px;
+    font-size: 0;
+    background: #0d0e59;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .userBtn::before,
+  .loginBtn::before {
+    top: 6px;
+  }
+
+  .userBtn::after,
+  .loginBtn::after {
+    bottom: 6px;
+  }
+
+  .userBtn span,
+  .loginBtn span {
+    display: block;
+    width: 24px;
+    height: 4px;
+    background: #0d0e59;
+    margin: 0 auto;
+  }
+
+  .loginBtn:hover {
+    background: #acacc8cc;
   }
 }
