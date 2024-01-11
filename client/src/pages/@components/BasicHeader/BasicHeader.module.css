@@ -41,10 +41,14 @@
   border-radius: 50%;
 }
 
-.userName {
+.userName .loginText {
   font-weight: bold;
+}
+
+.userName {
   color: #555;
 }
+
 .loginText {
   color: white;
 }
@@ -71,19 +75,20 @@
   .main {
     justify-content: space-between;
   }
+
   .title {
-    margin: 0 auto;
-    flex: 1;
-    text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex-grow: 1;
     max-width: 70%;
+    margin-right: 10px;
   }
+
   .userBtn,
   .loginBtn {
     justify-content: center;
-    background-color: #fff9f9;
+    background-color: #fafafa;
     padding: 8px;
     font-size: 0;
     height: 32px;
@@ -136,6 +141,6 @@
   }
 
   .loginBtn:hover {
-    background: #acacc8cc;
+    background: #0d0e5980;
   }
 }
