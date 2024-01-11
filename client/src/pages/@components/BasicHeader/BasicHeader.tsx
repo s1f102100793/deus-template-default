@@ -23,10 +23,18 @@ export const BasicHeader = (props: { user: User | null }) => {
             <div className={styles.loginBtn}>
               <span className={styles.loginText}>Login with Email</span>
             </div>
+            <div className={styles.hamburgerIcon}>
+              <span />
+            </div>
           </div>
         ) : (
-          <div className={styles.userBtn} onClick={onLogout}>
-            <span className={styles.userName}>{props.user.name}</span>
+          <div onClick={onLogout}>
+            <div className={styles.userBtn}>
+              <span className={styles.userName}>{props.user.name}</span>
+            </div>
+            <div className={styles.hamburgerIcon}>
+              <span />
+            </div>
           </div>
         )}
       </div>

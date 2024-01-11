@@ -1,7 +1,7 @@
 .container {
   position: sticky;
   top: 0;
-  height: 48px;
+  height: 47px;
   background: #fafafa;
   border-bottom: 1px solid #eee;
 }
@@ -81,58 +81,44 @@
     overflow: hidden;
     text-overflow: ellipsis;
     flex-grow: 1;
-    max-width: 70%;
-    margin-right: 10px;
   }
 
   .userBtn,
   .loginBtn {
+    display: none;
+  }
+
+  .hamburgerIcon {
     justify-content: center;
     background-color: #fafafa;
-    padding: 8px;
     font-size: 0;
+    padding: 8px;
+    padding-top: 14px;
     height: 32px;
     position: relative;
   }
 
-  .userBtn::after,
-  .userBtn::before {
+  .hamburgerIcon::before,
+  .hamburgerIcon::after {
     content: '';
     display: block;
     width: 24px;
     height: 4px;
-    font-size: 0;
     background: #0d0e59;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
   }
 
-  .loginBtn::before,
-  .loginBtn::after {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 4px;
-    font-size: 0;
-    background: #0d0e59;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .userBtn::before,
-  .loginBtn::before {
+  .hamburgerIcon::before {
     top: 6px;
   }
 
-  .userBtn::after,
-  .loginBtn::after {
+  .hamburgerIcon::after {
     bottom: 6px;
   }
 
-  .userBtn span,
-  .loginBtn span {
+  .hamburgerIcon span {
     display: block;
     width: 24px;
     height: 4px;
@@ -140,7 +126,7 @@
     margin: 0 auto;
   }
 
-  .loginBtn:hover {
-    background: #0d0e5980;
+  .loginBtn + .hamburgerIcon:hover {
+    background: #0d0e5988;
   }
 }
