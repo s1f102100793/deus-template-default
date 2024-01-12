@@ -1,13 +1,14 @@
 .container {
   position: sticky;
   top: 0;
-  height: 47px;
+  height: 48px;
   background: #fafafa;
   border-bottom: 1px solid #eee;
 }
 
 .main {
   display: flex;
+  gap: 12px;
   align-items: center;
   justify-content: space-between;
   max-width: 960px;
@@ -17,9 +18,13 @@
 }
 
 .title {
+  flex: 1;
+  overflow: hidden;
   font-size: 18px;
   font-weight: bold;
   color: #0d0e59;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .userBtn {
@@ -71,18 +76,39 @@
   background: #0d0e59cc;
 }
 
+.hamburgerIcon {
+  position: relative;
+  display: none;
+  width: 24px;
+  height: 32px;
+  padding-top: 14px;
+}
+
+.hamburgerIcon::before,
+.hamburgerIcon::after {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  content: '';
+  background: #0d0e59;
+}
+
+.hamburgerIcon::before {
+  top: 6px;
+}
+
+.hamburgerIcon::after {
+  bottom: 6px;
+}
+
+.hamburgerBar {
+  width: 100%;
+  height: 4px;
+  background: #0d0e59;
+}
+
 @media screen and (max-width: 640px) {
-  .main {
-    justify-content: space-between;
-  }
-
-  .title {
-    flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
   .userBtn,
   .loginBtn {
     display: none;
@@ -90,27 +116,5 @@
 
   .hamburgerIcon {
     display: block;
-    width: 24px;
-    height: 4px;
-    margin: 0 auto;
-    background: #0d0e59;
-  }
-
-  .hamburgerIcon::before,
-  .hamburgerIcon::after {
-    position: absolute;
-    display: block;
-    width: 24px;
-    height: 4px;
-    content: '';
-    background: #0d0e59;
-  }
-
-  .hamburgerIcon::before {
-    top: 12px;
-  }
-
-  .hamburgerIcon::after {
-    bottom: 12px;
   }
 }

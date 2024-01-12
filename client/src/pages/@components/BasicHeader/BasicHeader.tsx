@@ -7,6 +7,14 @@ import { APP_NAME } from 'src/utils/constants';
 import { supabase } from 'src/utils/supabase';
 import styles from './BasicHeader.module.css';
 
+const Hamburger = () => {
+  return (
+    <div className={styles.hamburgerIcon}>
+      <div className={styles.hamburgerBar} />
+    </div>
+  );
+};
+
 export const BasicHeader = (props: { user: User | null }) => {
   const [opened, setOpened] = useState(false);
   const onLogout = async () => {
@@ -23,14 +31,14 @@ export const BasicHeader = (props: { user: User | null }) => {
             <div className={styles.loginBtn}>
               <span className={styles.loginText}>Login with Email</span>
             </div>
-            <div className={styles.hamburgerIcon} />
+            <Hamburger />
           </div>
         ) : (
           <div onClick={onLogout}>
             <div className={styles.userBtn}>
               <span className={styles.userName}>{props.user.name}</span>
             </div>
-            <div className={styles.hamburgerIcon} />
+            <Hamburger />
           </div>
         )}
       </div>
