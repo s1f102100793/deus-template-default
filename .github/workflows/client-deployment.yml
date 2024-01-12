@@ -43,15 +43,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./client/out
-      - run: |
-          sed -i '/\.env$/d;/\$\*\.ts$/d;/\*\.css\.d\.ts$/d' .gitignore
-          echo "package-lock.json" >> .gitignore
-          git rm -r --cached .
-          rm -rf .github
-          unlink README.md
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          git add .
-          git commit -m "copy: $SHORT_SHA"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:deus/main-types -f

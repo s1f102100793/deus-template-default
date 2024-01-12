@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    if: github.repository == 'deus-app/deus-template' || github.event_name == 'pull_request'
+    if: github.repository == 'deus-app/deus-template' || github.repository == 'deus-app/deus-lo-vult' || github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v3
       - name: setup Node.js
