@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { User } from 'src/api/@types';
 import type { TaskModel } from 'src/api/@types/models';
 import { userAtom } from 'src/atoms/user';
@@ -25,11 +25,9 @@ const Home = () => {
   const inputFile = (e: ChangeEvent<HTMLInputElement>) => {
     setImage(e.target.files?.[0]);
   };
-  const fetchTasks = async () => {
-    const tasks = await apiClient.public.tasks.$get().catch(returnNull);
-
-    if (tasks !== null) setTasks(tasks);
-  };
+  const fetchTasks = useCallback(async () => {
+    await apiClient.public.tasks.$get().then(setTasks).catch(returnNull);
+  }, []);
   const createTask = async (e: FormEvent) => {
     e.preventDefault();
     if (!label || !fileRef.current) return;
@@ -43,8 +41,11 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const intervalId = window.setInterval(fetchTasks, 3000);
     fetchTasks();
-  }, [user?.id]);
+
+    return () => clearInterval(intervalId);
+  }, [fetchTasks]);
 
   useEffect(() => {
     if (!image) return;
