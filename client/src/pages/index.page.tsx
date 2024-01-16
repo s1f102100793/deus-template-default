@@ -1,18 +1,17 @@
-import type { TaskModel } from '$/api/@types/models';
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { ElapsedTime } from 'src/components/ElapsedTime/ElapsedTime';
-import { Loading } from 'src/components/Loading/Loading';
-import { BasicHeader } from 'src/pages/@components/BasicHeader/BasicHeader';
+import type { User } from 'src/api/@types';
+import type { TaskModel } from 'src/api/@types/models';
+import { userAtom } from 'src/atoms/user';
+import { ElapsedTime } from 'src/features/ElapsedTime/ElapsedTime';
+import { PrivateTask } from 'src/features/PrivateTask/PrivateTask';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
-import { userAtom } from '../atoms/user';
-import { PrivateTask } from './@components/PrivateTask/PrivateTask';
 import styles from './index.module.css';
 
 const Home = () => {
-  const [user] = useAtom(userAtom);
+  const [user] = useAtom<User | null>(userAtom);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [tasks, setTasks] = useState<TaskModel[]>();
   const [label, setLabel] = useState('');
@@ -57,55 +56,50 @@ const Home = () => {
     };
   }, [image]);
 
-  if (!tasks) return <Loading visible />;
-
   return (
-    <>
-      <BasicHeader user={user} />
-      <div className={styles.container}>
-        <ul className={styles.tasks}>
-          {user && (
-            <li className={styles.createTask}>
-              <input
-                type="text"
-                placeholder="What is happening?!"
-                value={label}
-                onChange={inputLabel}
-                className={styles.createTaskInput}
-              />
-              {image && <img src={previewImageUrl} className={styles.taskImage} />}
-              <input
-                type="file"
-                ref={fileRef}
-                accept=".png,.jpg,.jpeg,.gif,.webp,.svg"
-                onChange={inputFile}
-              />
-              <button onClick={createTask} className={styles.postBtn}>
-                POST
-              </button>
+    <div className={styles.container}>
+      <ul className={styles.tasks}>
+        {user !== null && (
+          <li className={styles.createTask}>
+            <input
+              type="text"
+              placeholder="What is happening?!"
+              value={label}
+              onChange={inputLabel}
+              className={styles.createTaskInput}
+            />
+            {image && <img src={previewImageUrl} className={styles.taskImage} />}
+            <input
+              type="file"
+              ref={fileRef}
+              accept=".png,.jpg,.jpeg,.gif,.webp,.svg"
+              onChange={inputFile}
+            />
+            <button onClick={createTask} className={styles.postBtn}>
+              POST
+            </button>
+          </li>
+        )}
+        {tasks?.map((task) => (
+          <div key={task.id}>
+            <li className={styles.taskHeader}>
+              <div className={styles.authorName}>{task.author.name}</div>
+              <ElapsedTime createdTime={task.createdTime} />
             </li>
-          )}
-          {tasks.map((task) => (
-            <div key={task.id}>
-              <li className={styles.taskHeader}>
-                <div className={styles.authorName}>{task.author.name}</div>
-                <ElapsedTime createdTime={task.createdTime} />
-              </li>
-              <li className={styles.label}>
-                {isPrivateTask(task) ? (
-                  <PrivateTask task={task} fetchTasks={fetchTasks} />
-                ) : (
-                  <span>{task.label}</span>
-                )}
-                {task.image && (
-                  <img src={task.image.url} alt={task.label} className={styles.taskImage} />
-                )}
-              </li>
-            </div>
-          ))}
-        </ul>
-      </div>
-    </>
+            <li className={styles.label}>
+              {isPrivateTask(task) ? (
+                <PrivateTask task={task} fetchTasks={fetchTasks} />
+              ) : (
+                <span>{task.label}</span>
+              )}
+              {task.image && (
+                <img src={task.image.url} alt={task.label} className={styles.taskImage} />
+              )}
+            </li>
+          </div>
+        ))}
+      </ul>
+    </div>
   );
 };
 
