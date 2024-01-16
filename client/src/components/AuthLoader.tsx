@@ -17,7 +17,7 @@ export const AuthLoader = () => {
         setUser(null);
       } else if (session !== null && user?.id !== session.user.id) {
         await apiClient.session.$post({ body: { jwt: session?.access_token } }).catch(returnNull);
-        await apiClient.private.me.$post().catch(returnNull).then(setUser);
+        await apiClient.me.$post().catch(returnNull).then(setUser);
       }
     });
 
