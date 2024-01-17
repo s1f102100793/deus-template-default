@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from 'react';
-import type { TaskModel } from 'src/api/@types/models';
+import type { TaskModel } from 'src/api/@types';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
 import styles from './PrivateTask.module.css';

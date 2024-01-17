@@ -1,4 +1,4 @@
-import type { TaskModel } from '$/api/@types/models';
+import type { TaskModel } from '$/api/@types';
 import type { DeletableTaskId } from '$/domain/model/taskModel';
 import type { Prisma, Task, User } from '@prisma/client';
 import { S3_PREFIX } from './s3Repo';

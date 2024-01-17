@@ -1,8 +1,7 @@
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { User } from 'src/api/@types';
-import type { TaskModel } from 'src/api/@types/models';
+import type { TaskModel, User } from 'src/api/@types';
 import { userAtom } from 'src/atoms/user';
 import { ElapsedTime } from 'src/features/ElapsedTime/ElapsedTime';
 import { PrivateTask } from 'src/features/PrivateTask/PrivateTask';
