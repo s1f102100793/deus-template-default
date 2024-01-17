@@ -44,4 +44,4 @@ jobs:
       - name: migrate
         run: npm run migrate:dev:createonly --prefix server -- --name deus
       - name: test
-        run: npm test:server
+        run: npm run test:server

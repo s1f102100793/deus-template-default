@@ -37,4 +37,4 @@ jobs:
       - name: typecheck
         run: npm run typecheck:client
       - name: test
-        run: npm test:client
+        run: npm run test:client
