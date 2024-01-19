@@ -34,14 +34,9 @@ $ cp docker/dev/.env.example docker/dev/.env
 
 ```sh
 $ docker compose up -d
-$ cd ..
-$ git clone --depth 1 https://github.com/supabase/supabase
-$ cd supabase/docker
-$ cp .env.example .env
-$ sed -i 's#"/auth/v1/verify"#"http://localhost:8000/auth/v1/verify"#g' .env
-$ docker compose -f docker-compose.yml -f dev/docker-compose.dev.yml up -d
-$ cd ../../deus-template
 ```
+
+Creatio の README 通りに Supabase を起動 (GitHub Auth 関連の環境変数は無くても動く)
 
 ### 開発サーバー起動
 
