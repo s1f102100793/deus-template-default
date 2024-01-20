@@ -7,7 +7,7 @@ import styles from './PrivateTask.module.css';
 export const PrivateTask = (props: { task: TaskModel; fetchTasks: () => Promise<void> }) => {
   const { task } = props;
   const [editingTaskId, setEditingTaskId] = useState<string>();
-  const [editingLabel, setEditingLabel] = useState('');
+  const [editingLabel, setEditingLabel] = useState<string>('');
   const isEditing = editingTaskId === task.id;
 
   const editLabel = (e: ChangeEvent<HTMLInputElement>) => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './ElapsedTime.module.css';
 
 export const ElapsedTime = (props: { createdTime: number }) => {
-  const [displayDate, setDisplayDate] = useState('');
+  const [displayDate, setDisplayDate] = useState<string>('');
 
   useEffect(() => {
     const now = Date.now();

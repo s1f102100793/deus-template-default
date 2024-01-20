@@ -16,7 +16,7 @@ const Hamburger = () => {
 };
 
 export const BasicHeader = (props: { user: User | null }) => {
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState<boolean>(false);
   const onLogout = async () => {
     setOpened(false);
     if (confirm('Logout?')) await supabase.auth.signOut();

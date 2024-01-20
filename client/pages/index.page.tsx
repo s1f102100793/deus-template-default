@@ -13,9 +13,9 @@ const Home = () => {
   const [user] = useAtom(userAtom);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [tasks, setTasks] = useState<TaskModel[]>();
-  const [label, setLabel] = useState('');
+  const [label, setLabel] = useState<string>('');
   const [image, setImage] = useState<File>();
-  const [previewImageUrl, setPreviewImageUrl] = useState('');
+  const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
   const isPrivateTask = (task: TaskModel) => user?.id === task.author.userId;
 
   const inputLabel = (e: ChangeEvent<HTMLInputElement>) => {
