@@ -28,10 +28,20 @@ jobs:
         with:
           path: 'server/node_modules'
           key: server-npm-${{ hashFiles('server/package-lock.json') }}
-      - run: npm install & npm install --prefix client & npm install --prefix server & wait
+      - run: npm install & npm install --prefix server & wait
         if: steps.root-npm-cache.outputs.cache-hit != 'true' || steps.server-npm-cache.outputs.cache-hit != 'true'
       - name: lint
         run: npm run lint:fix:server
+      - run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add .
+            git commit -m "Formatted"
+            git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD
+          fi
       - name: generate
         run: npm run generate:server
       - name: typecheck
