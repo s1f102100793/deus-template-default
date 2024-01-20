@@ -1,9 +1,9 @@
 import type { TaskModel, User } from '$/api/@types';
-import { taskModel } from '$/domain/model/taskModel';
-import { s3Repo } from '$/domain/repository/s3Repo';
-import { taskRepo } from '$/domain/repository/taskRepo';
+import { taskRepo } from '$/domain/task/repository/taskRepo';
 import { transaction } from '$/service/prismaClient';
+import { s3 } from '$/service/s3';
 import type { MultipartFile } from '@fastify/multipart';
+import { taskModel } from '../model/taskModel';
 
 export const taskUseCase = {
   create: (user: User, label: string, image: MultipartFile | undefined) =>
@@ -11,7 +11,7 @@ export const taskUseCase = {
       const task = taskModel.create(user, label, image);
 
       if (image !== undefined && task.image !== undefined) {
-        await s3Repo.save(task.image.s3Key, image);
+        await s3.put(task.image.s3Key, image);
       }
 
       await taskRepo.save(tx, task);

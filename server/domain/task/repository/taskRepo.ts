@@ -1,7 +1,7 @@
 import type { TaskModel } from '$/api/@types';
-import type { DeletableTaskId } from '$/domain/model/taskModel';
+import { S3_PREFIX } from '$/service/constants';
 import type { Prisma, Task, User } from '@prisma/client';
-import { S3_PREFIX } from './s3Repo';
+import type { DeletableTaskId } from '../model/taskModel';
 
 const toModel = (task: Task & { User: User }): TaskModel => ({
   id: task.id,

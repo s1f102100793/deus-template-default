@@ -1,5 +1,5 @@
-import type { JwtUser } from '$/domain/model/userModel';
-import { userRepo } from '$/domain/repository/userRepo';
+import type { JwtUser } from '$/domain/user/model/userModel';
+import { userRepo } from '$/domain/user/repository/userRepo';
 import type { JWT_PROP_NAME } from '$/service/constants';
 import { prismaClient } from '$/service/prismaClient';
 import assert from 'assert';
