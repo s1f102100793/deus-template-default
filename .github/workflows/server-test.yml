@@ -57,3 +57,13 @@ jobs:
         run: npm run test:server
       - name: build
         run: npm run build --prefix server
+      - run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add server/prisma/migrations/*
+            git commit -m "Created migration"
+            git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD
+          fi
