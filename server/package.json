@@ -19,16 +19,13 @@
     "generate:frourio": "frourio",
     "generate:aspida": "aspida",
     "generate:prisma": "prisma generate",
-    "migrate:dev": "prisma migrate dev && npx prisma db seed",
+    "migrate:dev": "prisma migrate dev",
     "migrate:dev:createonly": "prisma migrate dev --create-only",
-    "migrate:deploy": "prisma migrate deploy && npx prisma db seed",
+    "migrate:deploy": "prisma migrate deploy",
     "migrate:reset": "prisma migrate reset",
     "start": "node --enable-source-maps index.js",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
-  },
-  "prisma": {
-    "seed": "node -r esbuild-register prisma/seed.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.398.0",

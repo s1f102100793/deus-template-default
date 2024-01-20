@@ -14,11 +14,7 @@ export default defineController(() => ({
   },
   patch: {
     validators: {
-      body: z.object({
-        taskId: z.string(),
-        done: z.boolean(),
-        label: z.string(),
-      }),
+      body: z.object({ taskId: z.string(), done: z.boolean(), label: z.string() }),
     },
     handler: async ({ user, body }) => {
       const task = await taskUseCase.update(user, body.taskId, body.done, body.label);
