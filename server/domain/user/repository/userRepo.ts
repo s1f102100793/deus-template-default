@@ -1,4 +1,5 @@
-import type { Prisma, User as PrismaUser } from '@prisma/client';
+import type { User as PrismaUser } from '@prisma/client';
+import { prismaClient } from 'service/prismaClient';
 import type { User } from '../../../api/@types';
 
 const toModel = (prismaUser: PrismaUser): User => ({
@@ -8,15 +9,15 @@ const toModel = (prismaUser: PrismaUser): User => ({
 });
 
 export const userRepo = {
-  save: async (tx: Prisma.TransactionClient, user: User) => {
-    return tx.user.upsert({
+  save: async (user: User): Promise<void> => {
+    await prismaClient.user.upsert({
       where: { id: user.id },
       update: { email: user.email, name: user.name },
       create: { id: user.id, email: user.email, name: user.name },
     });
   },
-  findById: (tx: Prisma.TransactionClient, userId: string): Promise<User | null> =>
-    tx.user
+  findById: (userId: string): Promise<User | null> =>
+    prismaClient.user
       .findUnique({ where: { id: userId } })
       .then((user) => (user !== null ? toModel(user) : null)),
 };

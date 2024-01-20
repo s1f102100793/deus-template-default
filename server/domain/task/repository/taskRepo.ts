@@ -1,4 +1,5 @@
-import type { Prisma, Task, User } from '@prisma/client';
+import type { Task, User } from '@prisma/client';
+import { prismaClient } from 'service/prismaClient';
 import type { TaskModel } from '../../../api/@types';
 import { S3_PREFIX } from '../../../service/constants';
 import type { DeletableTaskId } from '../model/taskModel';
@@ -16,8 +17,8 @@ const toModel = (task: Task & { User: User }): TaskModel => ({
 });
 
 export const taskRepo = {
-  save: async (tx: Prisma.TransactionClient, task: TaskModel) => {
-    await tx.task.upsert({
+  save: async (task: TaskModel): Promise<void> => {
+    await prismaClient.task.upsert({
       where: { id: task.id },
       update: { done: task.done, label: task.label, imageKey: task.image?.s3Key },
       create: {
@@ -30,13 +31,15 @@ export const taskRepo = {
       },
     });
   },
-  delete: async (tx: Prisma.TransactionClient, deletableTaskId: DeletableTaskId) => {
-    await tx.task.delete({ where: { id: deletableTaskId.val } });
+  delete: async (deletableTaskId: DeletableTaskId): Promise<void> => {
+    await prismaClient.task.delete({ where: { id: deletableTaskId.val } });
   },
-  findAll: (tx: Prisma.TransactionClient, limit?: number): Promise<TaskModel[]> =>
-    tx.task
+  findAll: (limit?: number): Promise<TaskModel[]> =>
+    prismaClient.task
       .findMany({ take: limit, include: { User: true }, orderBy: { createdAt: 'desc' } })
       .then((tasks) => tasks.map(toModel)),
-  findByIdOrThrow: (tx: Prisma.TransactionClient, taskId: string): Promise<TaskModel> =>
-    tx.task.findUniqueOrThrow({ where: { id: taskId }, include: { User: true } }).then(toModel),
+  findByIdOrThrow: (taskId: string): Promise<TaskModel> =>
+    prismaClient.task
+      .findUniqueOrThrow({ where: { id: taskId }, include: { User: true } })
+      .then(toModel),
 };

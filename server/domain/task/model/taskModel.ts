@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import type { TaskModel, User } from '../../../api/@types';
 import { S3_PREFIX } from '../../../service/constants';
 
-const dataToUrl = (data: MultipartFile) => {
+const dataToUrl = (data: MultipartFile): { url: string; s3Key: string } => {
   const s3Key = `tasks/images/${randomUUID()}.${data.filename.split('.').at(-1)}`;
 
   return { url: `${S3_PREFIX}${s3Key}`, s3Key };

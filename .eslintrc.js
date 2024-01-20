@@ -45,5 +45,13 @@ module.exports = {
       files: ['*.js'],
       rules: { '@typescript-eslint/no-var-requires': ['off'] },
     },
+    {
+      files: ['server/**/*.ts'],
+      rules: { '@typescript-eslint/explicit-function-return-type': ['error'] },
+    },
+    {
+      files: ['server/api/**/controller.ts', 'server/api/**/hooks.ts'],
+      rules: { '@typescript-eslint/explicit-function-return-type': ['off'] },
+    },
   ],
 };

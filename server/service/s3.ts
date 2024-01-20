@@ -16,7 +16,7 @@ const s3Client = new S3Client({
 });
 
 export const s3 = {
-  put: async (key: string, data: MultipartFile) => {
+  put: async (key: string, data: MultipartFile): Promise<void> => {
     const command = new PutObjectCommand({
       Bucket: S3_BUCKET,
       ContentType: data.mimetype,

@@ -3,7 +3,7 @@ import cors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
 import helmet from '@fastify/helmet';
 import fastifyJwt from '@fastify/jwt';
-import type { FastifyServerFactory } from 'fastify';
+import type { FastifyInstance, FastifyServerFactory } from 'fastify';
 import Fastify from 'fastify';
 import server from '../$server';
 import {
@@ -14,7 +14,7 @@ import {
 } from '../service/envValues';
 import { COOKIE_NAME, JWT_PROP_NAME } from './constants';
 
-export const init = (serverFactory?: FastifyServerFactory) => {
+export const init = (serverFactory?: FastifyServerFactory): FastifyInstance => {
   const app = Fastify({ serverFactory });
   app.register(helmet);
   app.register(cors, { origin: [CORS_ORIGIN, CREATIO_ORIGIN], credentials: true });
