@@ -19,5 +19,5 @@
     "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "src/api/**/*.ts"]
+  "exclude": ["node_modules", "api/**/*.ts"]
 }

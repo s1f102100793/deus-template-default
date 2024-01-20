@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:client": "next dev -p 3000",
-    "dev:hcm": "hcm 'src/**/*.module.css' -w",
+    "dev:hcm": "hcm '**/*.module.css' -w",
     "dev:aspida": "aspida --watch",
     "dev:path": "pathpida --ignorePath ../.gitignore -s -w",
     "build": "npm run generate && next build",
@@ -16,7 +16,7 @@
     "generate": "run-p generate:*",
     "generate:aspida": "aspida",
     "generate:path": "pathpida --ignorePath ../.gitignore -s",
-    "hcm": "hcm 'src/**/*.module.css'",
+    "hcm": "hcm '**/*.module.css'",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:updateSnapshot": "vitest -u",

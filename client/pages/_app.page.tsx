@@ -4,10 +4,10 @@ import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import 'src/styles/globals.css';
 import { userAtom } from '../atoms/user';
 import { AuthLoader } from '../components/AuthLoader';
 import { BasicHeader } from '../components/BasicHeader/BasicHeader';
+import '../styles/globals.css';
 import { gaPageview } from '../utils/gtag';
 import { supabase } from '../utils/supabase';
 
