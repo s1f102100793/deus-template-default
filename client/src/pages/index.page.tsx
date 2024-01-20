@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { TaskModel, User } from 'src/api/@types';
+import type { TaskModel } from 'src/api/@types';
 import { userAtom } from 'src/atoms/user';
 import { ElapsedTime } from 'src/features/ElapsedTime/ElapsedTime';
 import { PrivateTask } from 'src/features/PrivateTask/PrivateTask';
@@ -10,7 +10,7 @@ import { returnNull } from 'src/utils/returnNull';
 import styles from './index.module.css';
 
 const Home = () => {
-  const [user] = useAtom<User | null>(userAtom);
+  const [user] = useAtom(userAtom);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [tasks, setTasks] = useState<TaskModel[]>();
   const [label, setLabel] = useState('');
