@@ -48,3 +48,7 @@ jobs:
         run: npm run typecheck:client
       - name: test
         run: npm run test:client
+      - name: build
+        run: |
+          cp client/.env.example client/.env
+          npm run build --prefix client
