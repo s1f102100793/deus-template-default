@@ -1,12 +1,12 @@
 import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { TaskModel } from 'src/api/@types';
-import { userAtom } from 'src/atoms/user';
-import { ElapsedTime } from 'src/features/ElapsedTime/ElapsedTime';
-import { PrivateTask } from 'src/features/PrivateTask/PrivateTask';
-import { apiClient } from 'src/utils/apiClient';
-import { returnNull } from 'src/utils/returnNull';
+import type { TaskModel } from '../api/@types';
+import { userAtom } from '../atoms/user';
+import { ElapsedTime } from '../features/ElapsedTime/ElapsedTime';
+import { PrivateTask } from '../features/PrivateTask/PrivateTask';
+import { apiClient } from '../utils/apiClient';
+import { returnNull } from '../utils/returnNull';
 import styles from './index.module.css';
 
 const Home = () => {

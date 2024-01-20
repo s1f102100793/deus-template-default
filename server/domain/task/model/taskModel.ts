@@ -1,7 +1,7 @@
-import type { TaskModel, User } from '$/api/@types';
-import { S3_PREFIX } from '$/service/constants';
 import type { MultipartFile } from '@fastify/multipart';
 import { randomUUID } from 'crypto';
+import type { TaskModel, User } from '../../../api/@types';
+import { S3_PREFIX } from '../../../service/constants';
 
 const dataToUrl = (data: MultipartFile) => {
   const s3Key = `tasks/images/${randomUUID()}.${data.filename.split('.').at(-1)}`;

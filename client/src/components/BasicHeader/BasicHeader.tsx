@@ -1,10 +1,10 @@
-import type { User } from '$/api/@types';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useState } from 'react';
-import { Modal, ModalBody } from 'src/components/Modal/Modal';
-import { APP_NAME } from 'src/utils/constants';
-import { supabase } from 'src/utils/supabase';
+import type { User } from '../../api/@types';
+import { Modal, ModalBody } from '../../components/Modal/Modal';
+import { APP_NAME } from '../../utils/constants';
+import { supabase } from '../../utils/supabase';
 import styles from './BasicHeader.module.css';
 
 const Hamburger = () => {

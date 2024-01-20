@@ -1,5 +1,5 @@
-import type { User } from '$/api/@types';
-import { transaction } from '$/service/prismaClient';
+import type { User } from '../../../api/@types';
+import { transaction } from '../../../service/prismaClient';
 import type { JwtUser } from '../model/userModel';
 import { userModel } from '../model/userModel';
 import { userRepo } from '../repository/userRepo';

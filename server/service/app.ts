@@ -1,10 +1,3 @@
-import server from '$/$server';
-import {
-  API_BASE_PATH,
-  CORS_ORIGIN,
-  CREATIO_ORIGIN,
-  SUPABASE_JWT_SECRET,
-} from '$/service/envValues';
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastifyEtag from '@fastify/etag';
@@ -12,6 +5,13 @@ import helmet from '@fastify/helmet';
 import fastifyJwt from '@fastify/jwt';
 import type { FastifyServerFactory } from 'fastify';
 import Fastify from 'fastify';
+import server from '../$server';
+import {
+  API_BASE_PATH,
+  CORS_ORIGIN,
+  CREATIO_ORIGIN,
+  SUPABASE_JWT_SECRET,
+} from '../service/envValues';
 import { COOKIE_NAME, JWT_PROP_NAME } from './constants';
 
 export const init = (serverFactory?: FastifyServerFactory) => {

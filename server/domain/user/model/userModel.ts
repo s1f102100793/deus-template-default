@@ -1,4 +1,4 @@
-import type { User } from '$/api/@types';
+import type { User } from '../../../api/@types';
 
 export type JwtUser = { sub: string; email: string; role: 'authenticated' | 'anon' };
 

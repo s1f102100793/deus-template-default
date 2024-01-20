@@ -1,15 +1,15 @@
-import { userAtom } from '$/atoms/user';
-import { BasicHeader } from '$/components/BasicHeader/BasicHeader';
 import { Auth } from '@supabase/auth-ui-react';
 import { useAtom } from 'jotai';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { AuthLoader } from 'src/components/AuthLoader';
 import 'src/styles/globals.css';
-import { gaPageview } from 'src/utils/gtag';
-import { supabase } from 'src/utils/supabase';
+import { userAtom } from '../atoms/user';
+import { AuthLoader } from '../components/AuthLoader';
+import { BasicHeader } from '../components/BasicHeader/BasicHeader';
+import { gaPageview } from '../utils/gtag';
+import { supabase } from '../utils/supabase';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user] = useAtom(userAtom);

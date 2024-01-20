@@ -1,8 +1,8 @@
-import type { JwtUser } from '$/domain/user/model/userModel';
-import { userRepo } from '$/domain/user/repository/userRepo';
-import type { JWT_PROP_NAME } from '$/service/constants';
-import { prismaClient } from '$/service/prismaClient';
 import assert from 'assert';
+import type { JwtUser } from '../../domain/user/model/userModel';
+import { userRepo } from '../../domain/user/repository/userRepo';
+import type { JWT_PROP_NAME } from '../../service/constants';
+import { prismaClient } from '../../service/prismaClient';
 import type { User } from '../@types';
 import { defineHooks } from './$relay';
 

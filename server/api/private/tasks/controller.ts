@@ -1,5 +1,5 @@
-import { taskUseCase } from '$/domain/task/useCase/taskUseCase';
 import { z } from 'zod';
+import { taskUseCase } from '../../../domain/task/useCase/taskUseCase';
 import { defineController, multipartFileValidator } from './$relay';
 
 export default defineController(() => ({

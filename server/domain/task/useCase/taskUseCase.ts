@@ -1,9 +1,9 @@
-import type { TaskModel, User } from '$/api/@types';
-import { taskRepo } from '$/domain/task/repository/taskRepo';
-import { transaction } from '$/service/prismaClient';
-import { s3 } from '$/service/s3';
 import type { MultipartFile } from '@fastify/multipart';
+import type { TaskModel, User } from '../../../api/@types';
+import { transaction } from '../../../service/prismaClient';
+import { s3 } from '../../../service/s3';
 import { taskModel } from '../model/taskModel';
+import { taskRepo } from '../repository/taskRepo';
 
 export const taskUseCase = {
   create: (user: User, label: string, image: MultipartFile | undefined) =>
