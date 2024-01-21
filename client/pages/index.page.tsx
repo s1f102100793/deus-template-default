@@ -31,7 +31,7 @@ const Home = () => {
     e.preventDefault();
     if (!label || !fileRef.current) return;
 
-    await apiClient.private.tasks.post({ body: { label, image } }).catch(returnNull);
+    await apiClient.private.tasks.$post({ body: { label, image } }).catch(returnNull);
     setLabel('');
     setImage(undefined);
     setPreviewImageUrl('');
